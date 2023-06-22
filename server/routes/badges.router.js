@@ -16,12 +16,27 @@ router.get('/', (req, res) => {
     JOIN badges ON badge_earned.badge_id = badges.id 
     WHERE "user".id = $1;`;
 
-    pool.query(queryText, [userId]).then(() => {
-        res.sendStatus(201)
+    pool.query(queryText, [userId]).then((response) => {
+        res.send(response.rows)
     }).catch((err) => {
         console.log('GET call to /api/badges failed: ', err);
         res.sendStatus(500);
     });
 });
+
+
+// POST Route for when a user earns a new badge
+router.post('/', (req, res) => {
+    const userId = req.user.id;
+    const badgeId = req.body.badge;
+  
+    const queryText = `INSERT INTO "badge_earned" (user_id, badge_id) VALUES ($1, $2)`;
+    pool.query(queryText, [userId, badgeId]).then(() => {
+        res.sendStatus(201);
+    }).catch((err) => {
+        console.log('POST call to /api/badges failed: ', err);
+        res.sendStatus(500);
+    });
+  });
 
 module.exports = router;
