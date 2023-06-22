@@ -11,7 +11,8 @@ CREATE TABLE "user" (
  birthdate DATE,
  email VARCHAR(100),
  password varchar(250),
- username varchar(50)
+ username varchar(50),
+ pronoun varchar(50)
 );
 
  -- Create the ‘journal’ table
