@@ -69,3 +69,5 @@ CREATE TABLE badge_earned (
  select * from badges ;
  select * from badge_earned ;
  -- insert statments
+
+ 
