@@ -11,7 +11,7 @@ function* fetchBadges() {
 }
 
 function* badgesSaga() {
-  yield takeLatest('FETCH_USER', fetchBadges);
+  yield takeLatest('FETCH_BADGES', fetchBadges);
 }
 
 export default badgesSaga;
