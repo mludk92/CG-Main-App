@@ -10,6 +10,9 @@ const passport = require('./strategies/user.strategy');
 // Route includes
 const userRouter = require('./routes/user.router');
 
+    //journal router added by Mitch
+const journalRouter = require('./routes/journal.router')
+
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,7 +31,7 @@ app.use('/api/user', userRouter);
 app.use(express.static('build'));
 
 // App Set //
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5002;
 
 /** Listen * */
 app.listen(PORT, () => {
