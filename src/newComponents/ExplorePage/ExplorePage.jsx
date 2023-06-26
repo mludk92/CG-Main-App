@@ -1,7 +1,11 @@
 function Explore() {
 
     return (
-        <h3>Welcome to the Explore Page</h3>
+        <div className="container">
+            <h3>Welcome to the Explore Page</h3>
+            <p>Search bar / filter goes here</p>
+            <p>All mapped content goes here</p>
+        </div>
     )
 }
 
