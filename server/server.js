@@ -9,6 +9,7 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const userRouter = require('./routes/user.router');
+const badgesRouter = require('./routes/badges.router');
 
     //journal router added by Mitch
 const journalRouter = require('./routes/journal.router')
@@ -26,6 +27,7 @@ app.use(passport.session());
 
 /* Routes */
 app.use('/api/user', userRouter);
+app.use('/api/badges', badgesRouter);
 
 // Serve static files
 app.use(express.static('build'));
