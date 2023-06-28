@@ -23,6 +23,7 @@ import HomePage from '../../newComponents/HomePage/HomePage'
 import ExplorePage from '../../newComponents/ExplorePage/ExplorePage'
 
 import './App.css';
+import ContentDetails from '../../newComponents/ContentDetailsPage/ContentDetailsPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -68,6 +69,14 @@ function App() {
             path="/explore"
           >
             <ExplorePage />
+          </ProtectedRoute>
+
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path="/details/:id"
+          >
+            <ContentDetails />
           </ProtectedRoute>
 
           <ProtectedRoute
