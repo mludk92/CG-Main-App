@@ -18,7 +18,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-
+import Journals from '../../newComponents/Journals/Journals';
 import HomePage from '../../newComponents/HomePage/HomePage'
 import ExplorePage from '../../newComponents/ExplorePage/ExplorePage'
 
@@ -128,6 +128,13 @@ function App() {
               <LandingPage />
             }
           </Route>
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path="/journal"
+          >
+            <Journals />
+          </ProtectedRoute>
 
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
