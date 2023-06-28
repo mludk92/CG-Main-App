@@ -69,4 +69,23 @@ CREATE TABLE badge_earned (
  select * from content_seen ;
  select * from badges ;
  select * from badge_earned ;
- -- insert statments
+
+
+
+
+-- Dummy journal entries for testing purposes
+INSERT INTO journal (user_id, journal, entry_date, mood)
+VALUES
+ (1, 'Today was a great day!', '2023-06-26', 5),
+ (1, 'Feeling a bit tired today.', '2023-06-27', 3),
+ (1, 'Had a productive day at work!', '2023-06-28', 4);
+
+-- Three examples of badges
+INSERT INTO badges (badge_name, summary)
+VALUES ('First Meditation', 'View your first piece on content'),
+    ('On Fire', 'Log in 3 days in a row.'),
+    ('Reflection Time', 'Write your first journal entry');
+
+-- Dummy earned badges for testing purposes
+INSERT INTO badge_earned (badge_id, user_id)
+VALUES (1, 1), (2, 1);
