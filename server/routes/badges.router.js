@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
     FROM badge_earned 
     JOIN "user" ON badge_earned.user_id = "user".id 
     JOIN badges ON badge_earned.badge_id = badges.id 
-    WHERE "user".id = $1;`;
+    WHERE user_id= $1;`;
 
     pool.query(queryText, [userId]).then((response) => {
         res.send(response.rows)
