@@ -29,6 +29,9 @@ else {
         host: 'localhost',
         port: 5432,
         database: 'changegrower',   // 	💥 Change this to the name of your database!
+        //remove these for push
+        username:'MitchLudkey',
+        password: 'admin',
     });
 }
 
