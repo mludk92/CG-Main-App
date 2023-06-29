@@ -1,12 +1,18 @@
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import HomeHeader from './HomeHeader';
+import NewSection from './NewSection';
+import RecommendedSection from './RecommendedSection';
+import './Home.css';
 
 function HomePage() {
 
     return (
-        <div className="container">
-            <h3>Welcome to the Home Page</h3>
-            <p>Random quote goes here</p>
-            <p>Newest + Recommended content goes here</p>
-        </div>
+        <Box>
+            <HomeHeader />
+            <NewSection />
+            <RecommendedSection />
+        </Box>
     );
 };
 
