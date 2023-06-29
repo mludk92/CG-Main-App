@@ -33,10 +33,6 @@ function Nav() {
               User
             </Link>
 
-            <Link className="navLink" to="/journal">
-              Journals
-            </Link>
-
             {/* <LogOutButton className="navLink" /> */}
           </>
         )}
