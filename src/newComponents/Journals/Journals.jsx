@@ -41,24 +41,27 @@ function Journals() {
 
         {/* Mapping journalEntries to be displayed on cards */}
         {journalEntries.map((entry, index) => (
-          <Card key={index} variant="outlined" style={{ marginBottom: '10px' }}>
+          <Card key={index} variant="outlined" style={{ 
+            marginBottom: '10px',
+
+          }}>
             <CardContent>
 
-              <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
+              <Box display="flex" justifyContent="space-between" alignItems="center">
                 
                 {/* Date and Mood from entry */}
-                <Typography variant="subtitle2">
-                  <span>Date: {formatDate(entry.entry_date)}</span> - <span>Mood: {entry.mood}</span>
+                <Typography variant="subtitle2" style={{ marginTop: '-13px'}}>
+                  <span>{formatDate(entry.entry_date)}</span> - <span>Mood: {entry.mood}</span>
                 </Typography>
 
                 <div>
                   {/* Edit journal entry icon */}
-                  <IconButton aria-label="Edit">
+                  <IconButton aria-label="Edit" style={{ marginTop: '-15px'}}>
                     <EditIcon />
                   </IconButton>
 
                   {/* Delete journal entry icon */}
-                  <IconButton aria-label="Delete">
+                  <IconButton aria-label="Delete" style={{ marginTop: '-15px'}}>
                     <DeleteIcon />
                   </IconButton>
                 </div>
