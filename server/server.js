@@ -6,17 +6,22 @@ const app = express();
 
 const sessionMiddleware = require('./modules/session-middleware');
 const passport = require('./strategies/user.strategy');
-
+const fileUpload = require('express-fileupload');
 // Route includes
 const userRouter = require('./routes/user.router');
 const badgesRouter = require('./routes/badges.router');
-
+const imageRouter = require('./routes/image.router.js').default;
     //journal router added by Mitch
 const journalRouter = require('./routes/journal.router')
 
 // Body parser middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
+// needed for req.body
+app.use(express.json());
+app.use(express.static('build'))
+
+// Accept file uploads
+ app.use(fileUpload());
 
 // Passport Session Configuration //
 app.use(sessionMiddleware);
@@ -29,7 +34,7 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/badges', badgesRouter);
 app.use('/journal', journalRouter);
-
+app.use('/api/images', imageRouter);
 // Serve static files
 app.use(express.static('build'));
 
