@@ -24,22 +24,33 @@ function Journals() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
+  // Get current date
+  const currentDate = formatDate(new Date().toISOString());
+
   // Storing new journal entry and mood in useState
-  const [newEntry, setEntry] = useState({ journal: '', mood: 1 })
+  const [newEntry, setEntry] = useState({ journal: '', mood: 1, date: currentDate });
 
   // Handle change for journal entry
   const handleEntryChange = (event) => {
-    setEntry({ ...newEntry, journal: event.target.value })
+    setEntry({ ...newEntry, journal: event.target.value });
   }
 
   // Handle change for mood
   const handleMoodChange = (event) => {
-    setEntry({ ...newEntry, mood: event.target.value })
+    setEntry({ ...newEntry, mood: event.target.value });
   }
 
-  // Handle change for insert journal entry
-  const handleCreateEntry = () => {
-    dispatch({ type: 'INSERT_JOURNAL_ENTRY', payload: newEntry })
+  // Handle change for insert journal entry on submit
+  const handleCreateEntry = (event) => {
+    event.preventDefault();
+
+    if (newEntry.journal === '') {
+      alert('Cannot submit empty journal entry.')
+    } else {
+      dispatch({ type: 'INSERT_JOURNAL_ENTRY', payload: newEntry });
+      setEntry({ journal: '', mood: 1, date: currentDate });
+      event.target.reset();
+    }
   }
 
   // Handle change for delete journal entry
@@ -56,47 +67,49 @@ function Journals() {
       <Typography variant="h5">Journal</Typography>
       <br />
 
-      {/* Text area to type journal entry */}
-      <TextField
-        multiline
-        rows={5}
-        placeholder='Create a journal entry'
-        onChange={handleEntryChange}
-        style={{
-          width: '100%',
-        }}
-      />
+      <form onSubmit={handleCreateEntry}>
+        {/* Text area to type journal entry */}
+        <TextField
+          multiline
+          rows={5}
+          placeholder='Create a journal entry'
+          onChange={handleEntryChange}
+          style={{
+            width: '100%',
+          }}
+        />
 
-      <br /><br />
+        <br /><br />
 
-      {/* Mood select and submit button */}
-      <div className="mood-select-container">
-        <div className="mood-select-wrapper">
-          <InputLabel className="mood-label">Mood:</InputLabel>
-          <Select
-            value={newEntry.mood}
-            onChange={handleMoodChange}
-            className="mood-select-input"
-            MenuProps={{
-              anchorOrigin: {
-                vertical: "bottom",
-                horizontal: "left"
-              },
-              transformOrigin: {
-                vertical: "top",
-                horizontal: "left"
-              }
-            }}
-          >
-            <MenuItem value={1}>1</MenuItem>
-            <MenuItem value={2}>2</MenuItem>
-            <MenuItem value={3}>3</MenuItem>
-            <MenuItem value={4}>4</MenuItem>
-            <MenuItem value={5}>5</MenuItem>
-          </Select>
+        {/* Mood select and submit button */}
+        <div className="mood-select-container">
+          <div className="mood-select-wrapper">
+            <InputLabel className="mood-label">Mood:</InputLabel>
+            <Select
+              value={newEntry.mood}
+              onChange={handleMoodChange}
+              className="mood-select-input"
+              MenuProps={{
+                anchorOrigin: {
+                  vertical: "bottom",
+                  horizontal: "left"
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left"
+                }
+              }}
+            >
+              <MenuItem value={1}>1</MenuItem>
+              <MenuItem value={2}>2</MenuItem>
+              <MenuItem value={3}>3</MenuItem>
+              <MenuItem value={4}>4</MenuItem>
+              <MenuItem value={5}>5</MenuItem>
+            </Select>
+          </div>
+          <button className="submit-button" type="submit">Submit</button>
         </div>
-        <button className="submit-button" onClick={handleCreateEntry}>Submit</button>
-      </div>
+      </form>
 
       <br /><br />
 

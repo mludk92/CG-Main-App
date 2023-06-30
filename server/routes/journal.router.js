@@ -38,7 +38,9 @@ router.post('/', (req, res) => {
 
   if (req.isAuthenticated()) {
     const userId = req.user.id;
-    const { journal, entry_date, mood } = req.body;
+    const journal = req.body.journal
+    const entry_date = req.body.date
+    const mood = req.body.mood
     const queryText = `INSERT INTO journal (user_id, journal, entry_date, mood)
       VALUES ($1, $2, $3, $4)`;
 
