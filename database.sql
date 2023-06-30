@@ -89,3 +89,12 @@ VALUES ('First Meditation', 'View your first piece on content'),
 -- Dummy earned badges for testing purposes
 INSERT INTO badge_earned (badge_id, user_id)
 VALUES (1, 1), (2, 1);
+
+-- CREATE DATABASE "aws-file-upload";
+
+-- Table structure
+CREATE TABLE "images" (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR(1000) NOT NULL,
+	"type" VARCHAR(50) NOT NULL
+);

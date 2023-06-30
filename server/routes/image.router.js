@@ -1,9 +1,11 @@
-import { Router } from 'express';
-const router = Router();
-import { query } from '../modules/pool.js';
-import aws from 'aws-sdk';
-import dotenv from 'dotenv';
-import { GetObjectCommand, PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+const express = require('express');
+const router = express.Router();
+const pool = require('../modules/pool.js');
+const {
+    GetObjectCommand,
+    PutObjectCommand,
+    S3Client,
+} = require('@aws-sdk/client-s3');
 
 const s3Client = new S3Client({
     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -13,7 +15,7 @@ const s3Client = new S3Client({
 
 router.get('/', async (req, res) => {
     try {
-        let result = await query(`
+        let result = await pool.query(`
             SELECT * FROM "images";
         `);
         res.send(result.rows);
@@ -55,7 +57,7 @@ router.post('/', async (req, res) => {
 
         const response = await s3Client.send(command);
         console.log(response); // Used for debugging
-        await query(`
+        await pool.query(`
             INSERT INTO "images" ("name", "type")
             VALUES ($1, $2);
         `, [imageName, imageType]);
@@ -68,4 +70,4 @@ router.post('/', async (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;
