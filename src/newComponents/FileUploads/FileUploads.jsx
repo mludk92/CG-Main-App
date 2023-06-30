@@ -3,118 +3,177 @@ import { readAndCompressImage } from 'browser-image-resizer';
 
 import axios from 'axios';
 
-function FileUploads () {
-  // Selected image file name
+function FileUploads() {
   const [fileName, setFileName] = useState('');
-  // Selected file type
   const [fileType, setFileType] = useState('');
-  // Selected image file
   const [selectedFile, setSelectedFile] = useState();
-  // Selected image preview
   const [imagePreview, setImagePreview] = useState();
-  // Used to display uploaded images on the page
   const [imageList, setImageList] = useState([]);
+  const [videoList, setVideoList] = useState([]);
+  const [audioList, setAudioList] = useState([]);
 
   const onFileChange = async (event) => {
-    // Access the selected file
     const fileToUpload = event.target.files[0];
-
-    // Resize and compress the image. Remove this if using something other
-    // than an image upload.
-    const copyFile = new Blob([fileToUpload], { type: fileToUpload.type, name: fileToUpload.name });
-    const resizedFile = await readAndCompressImage(copyFile, {
-      quality: 1.0,    // 100% quality
-      maxHeight: 1000, // max height of the image
-    });
-
-    // Limit to specific file types.
     const acceptedImageTypes = ['image/gif', 'image/jpeg', 'image/png'];
+    const acceptedVideoTypes = ['video/mp4', 'video/mov', 'video/avi'];
+    const acceptedAudioTypes = ['audio/mp3', 'audio/wav'];
 
-    // Check if the file is one of the allowed types.
     if (acceptedImageTypes.includes(fileToUpload.type)) {
-      // Resizing the image removes the name, store it in a separate variable
+      const copyFile = new Blob([fileToUpload], { type: fileToUpload.type, name: fileToUpload.name });
+      const resizedFile = await readAndCompressImage(copyFile, {
+        quality: 1.0,
+        maxHeight: 1000,
+      });
+
       setFileName(encodeURIComponent(fileToUpload.name));
       setFileType(encodeURIComponent(fileToUpload.type));
-      // Save the resized file
       setSelectedFile(resizedFile);
-      // Create a URL that can be used in an img tag for previewing the image
       setImagePreview(URL.createObjectURL(resizedFile));
+    } else if (acceptedVideoTypes.includes(fileToUpload.type)) {
+      setFileType(encodeURIComponent(fileToUpload.type));
+      setSelectedFile(fileToUpload);
+      setFileName(encodeURIComponent(fileToUpload.name));
+      setImagePreview(undefined);
+    } else if (acceptedAudioTypes.includes(fileToUpload.type)) {
+      setFileType(encodeURIComponent(fileToUpload.type));
+      setSelectedFile(fileToUpload);
+      setFileName(encodeURIComponent(fileToUpload.name));
+      setImagePreview(undefined);
     } else {
-      alert('Please select an image');
+      alert('Please select an image, video, or audio file');
     }
-  }
+  };
+
+  const sendFileToServer = (fileType, fileName, fileData) => {
+    const formData = new FormData();
+    formData.append('file', fileData);
+    let postUrl = '';
+
+    if (fileType.startsWith('image/')) {
+      postUrl = `/api/images?imageName=${fileName}&imageType=${fileType}`;
+    } else if (fileType.startsWith('video/')) {
+      postUrl = `/api/videos?videoName=${fileName}&videoType=${fileType}`;
+    } else if (fileType.startsWith('audio/')) {
+      postUrl = `/api/audio?audioName=${fileName}&audioType=${fileType}`;
+    }
+
+    return axios.post(postUrl, formData);
+  };
 
   const sendPhotoToServer = (event) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append('image', selectedFile);
-    let postUrl = `/api/images?imageName=${fileName}&imageType=${fileType}`;
-    axios.post(postUrl, formData).then(response => {
-      console.log('Success!');
-      alert('Success!');
-      clearForm();
-      getImages();
-    }).catch(error => {
-      console.log('error', error);
-      alert('Something went wrong');
-    })
-  }
+    
+    sendFileToServer(fileType, fileName, selectedFile)
+      .then(response => {
+        console.log('Success!');
+        alert('Success!');
+        clearForm();
+        getImages();
+      })
+      .catch(error => {
+        console.log('error', error);
+        alert('Something went wrong');
+      });
+  };
 
   const clearForm = () => {
     setFileName('');
     setFileType('');
     setSelectedFile(undefined);
     setImagePreview(undefined);
-  }
+  };
 
   const getImages = () => {
-    axios.get('/api/images').then(response => {
-      setImageList(response.data);
-    }).catch(error => {
-      console.log('error', error);
-      alert('Something went wrong');
-    });
-  }
+    axios.get('/api/images')
+      .then(response => {
+        setImageList(response.data);
+      })
+      .catch(error => {
+        console.log('error', error);
+        alert('Something went wrong');
+      });
+  };
+
+  const getVideos = () => {
+    axios.get('/api/videos')
+      .then(response => {
+        setVideoList(response.data);
+      })
+      .catch(error => {
+        console.log('error', error);
+        alert('Something went wrong');
+      });
+  };
+
+  const getAudio = () => {
+    axios.get('/api/audio')
+      .then(response => {
+        setAudioList(response.data);
+      })
+      .catch(error => {
+        console.log('error', error);
+        alert('Something went wrong');
+      });
+  };
 
   useEffect(() => {
     getImages();
+    getVideos();
+    getAudio();
   }, []);
-  
+
   return (
     <div>
       <form onSubmit={sendPhotoToServer}>
         <input
           type="file"
-          accept="image/*"
+          accept="image/*,video/*,audio/*"
           onChange={onFileChange}
         />
-        {
-          imagePreview && (
-            <>
-              <br />
-              <br />
-              <p>Preview</p>
-              <img style={{maxHeight: '100px'}} src={imagePreview} />
-            </>
-          )
-        }
+        {imagePreview && (
+          <>
+            <br />
+            <br />
+            <p>Preview</p>
+            <img style={{ maxHeight: '100px' }} src={imagePreview} alt="Preview" />
+          </>
+        )}
         <br />
         <button type="submit">Submit</button>
       </form>
 
       <h2>Images</h2>
-      {
-        imageList.map(image => (
-          <div key={image.id}>
-            <div>{image.name}</div>
-            <div>{image.type}</div>
-            <img style={{ maxHeight: '200px' }} src={`api/images/${image.name}`} /> 
-          </div>
-        ))
-      }
+      {imageList.map(image => (
+        <div key={image.id}>
+          <div>{image.name}</div>
+          <div>{image.type}</div>
+          <img style={{ maxHeight: '200px' }} src={`api/images/${image.name}`} alt={image.name} />
+        </div>
+      ))}
+
+      <h2>Videos</h2>
+      {videoList.map(video => (
+        <div key={video.id}>
+          <div>{video.name}</div>
+          <div>{video.type}</div>
+          <video style={{ maxHeight: '200px' }} controls>
+            <source src={`api/videos/${video.name}`} type={video.type} />
+          </video>
+        </div>
+      ))}
+
+      <h2>Audio</h2>
+      {audioList.map(audio => (
+        <div key={audio.id}>
+          <div>{audio.name}</div>
+          <div>{audio.type}</div>
+          <audio controls>
+            <source src={`api/audio/${audio.name}`} type={audio.type} />
+          </audio>
+        </div>
+      ))}
     </div>
   );
-
 }
 
-export default FileUploads
+export default FileUploads;

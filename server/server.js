@@ -11,22 +11,26 @@ const fileUpload = require('express-fileupload');
 const userRouter = require('./routes/user.router');
 const badgesRouter = require('./routes/badges.router');
 const imageRouter = require('./routes/image.router.js');
-    //journal router added by Mitch
-const journalRouter = require('./routes/journal.router')
+// journal router added by Mitch
+const journalRouter = require('./routes/journal.router');
+// audio and videos routers
+const audioRouter = require('./routes/audio.router');
+const videosRouter = require('./routes/videos.router');
 
 // Body parser middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// needed for req.body
-app.use(express.json());
-app.use(express.static('build'))
+// Serve static files
+app.use(express.static('build'));
 
 // Accept file uploads
- app.use(fileUpload());
+app.use(fileUpload());
 
-// Passport Session Configuration //
+// Passport Session Configuration
 app.use(sessionMiddleware);
 
-// start up passport sessions
+// Start up passport sessions
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -35,14 +39,13 @@ app.use('/api/user', userRouter);
 app.use('/api/badges', badgesRouter);
 app.use('/journal', journalRouter);
 app.use('/api/images', imageRouter);
-// Serve static files
-app.use(express.static('build'));
+app.use('/api/audio', audioRouter);
+app.use('/api/videos', videosRouter);
 
-// App Set //
+// App Set
 const PORT = process.env.PORT || 5002;
 
-/** Listen * */
+/** Listen **/
 app.listen(PORT, () => {
   console.log(`Listening on port: ${PORT}`);
 });
-
