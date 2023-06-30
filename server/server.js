@@ -11,6 +11,8 @@ const fileUpload = require('express-fileupload');
 const userRouter = require('./routes/user.router');
 const badgesRouter = require('./routes/badges.router');
 const imageRouter = require('./routes/image.router.js');
+const audioRouter = require('./routes/audio.router.js');
+const videoRouter = require('./routes/video.router.js');
 // journal router added by Mitch
 const journalRouter = require('./routes/journal.router');
 
@@ -37,6 +39,8 @@ app.use('/api/user', userRouter);
 app.use('/api/badges', badgesRouter);
 app.use('/journal', journalRouter);
 app.use('/api/images', imageRouter);
+app.use('/api/audio', audioRouter);
+app.use('/api/video', videoRouter);
 
 
 // App Set
