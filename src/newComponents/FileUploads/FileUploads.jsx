@@ -51,6 +51,20 @@ function FileUploads() {
       });
   };
 
+  const deleteFile = (fileId, fileType) => {
+    axios
+      .delete(`/api/${fileType}/${fileId}`)
+      .then((response) => {
+        console.log('Success!');
+        alert('File deleted successfully!');
+        getFiles();
+      })
+      .catch((error) => {
+        console.log('Error', error);
+        alert('Something went wrong');
+      });
+  };
+
   const clearForm = () => {
     setFileName('');
     setFileType('');
@@ -107,6 +121,7 @@ function FileUploads() {
           <div>{image.name}</div>
           <div>{image.type}</div>
           <img style={{ maxHeight: '200px' }} src={`/api/images/${image.name}`} alt={image.name} />
+          <button onClick={() => deleteFile(image.id, 'images')}>Delete</button>
         </div>
       ))}
 
@@ -118,6 +133,7 @@ function FileUploads() {
           <audio controls>
             <source src={`/api/audio/${encodeURIComponent(audio.name)}`} type={audio.type} />
           </audio>
+          <button onClick={() => deleteFile(audio.id, 'audio')}>Delete</button>
         </div>
       ))}
 
@@ -129,6 +145,7 @@ function FileUploads() {
           <video controls>
             <source src={`/api/video/${encodeURIComponent(video.name)}`} type={video.type} />
           </video>
+          <button onClick={() => deleteFile(video.id, 'video')}>Delete</button>
         </div>
       ))}
     </div>
