@@ -65,7 +65,7 @@ router.delete('/', (req, res) => {
   console.log('user', req.user);
 
   if (req.isAuthenticated()) {
-    const entryId = req.body.id;
+    const entryId = req.body;
 
     const deleteQuery = `DELETE FROM journal WHERE id = $1`;
 

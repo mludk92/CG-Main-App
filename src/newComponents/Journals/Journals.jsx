@@ -18,9 +18,12 @@ function Journals() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   }
 
+  const handleDeleteEntry = (entryId) => {
+    dispatch({ type: 'DELETE_JOURNAL_ENTRY', payload: entryId });
+  }
+
   return (
-    <div className="container">
-      <center>
+    <div className="container" style={{ height: '100vh', overflowY: 'auto' }}>
         <Typography variant="h5">Journal</Typography>
         <br />
         <textarea
@@ -33,7 +36,6 @@ function Journals() {
         />
         <br />
         <button>Submit</button>
-      </center>
 
       <br /><br />
 
@@ -41,10 +43,7 @@ function Journals() {
 
         {/* Mapping journalEntries to be displayed on cards */}
         {journalEntries.map((entry, index) => (
-          <Card key={index} variant="outlined" style={{ 
-            marginBottom: '10px',
-
-          }}>
+          <Card key={index} variant="outlined" style={{ marginBottom: '10px' }}>
             <CardContent>
 
               <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -56,12 +55,20 @@ function Journals() {
 
                 <div>
                   {/* Edit journal entry icon */}
-                  <IconButton aria-label="Edit" style={{ marginTop: '-15px'}}>
+                  <IconButton aria-label="Edit" style={{ 
+                    marginTop: '-15px',
+                    marginRight: '-5px'
+                  }}>
                     <EditIcon />
                   </IconButton>
 
                   {/* Delete journal entry icon */}
-                  <IconButton aria-label="Delete" style={{ marginTop: '-15px'}}>
+                  <IconButton aria-label="Delete" onClick={() => handleDeleteEntry(entry.id)}
+                    style={{ 
+                      marginTop: '-15px',
+                      marginRight: '-15px'
+                    }}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </div>
