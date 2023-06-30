@@ -10,7 +10,7 @@ const fileUpload = require('express-fileupload');
 // Route includes
 const userRouter = require('./routes/user.router');
 const badgesRouter = require('./routes/badges.router');
-const imageRouter = require('./routes/image.router.js').default;
+const imageRouter = require('./routes/image.router.js');
     //journal router added by Mitch
 const journalRouter = require('./routes/journal.router')
 
