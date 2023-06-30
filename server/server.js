@@ -13,9 +13,7 @@ const badgesRouter = require('./routes/badges.router');
 const imageRouter = require('./routes/image.router.js');
 // journal router added by Mitch
 const journalRouter = require('./routes/journal.router');
-// audio and videos routers
-const audioRouter = require('./routes/audio.router');
-const videosRouter = require('./routes/videos.router');
+
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -39,8 +37,7 @@ app.use('/api/user', userRouter);
 app.use('/api/badges', badgesRouter);
 app.use('/journal', journalRouter);
 app.use('/api/images', imageRouter);
-app.use('/api/audio', audioRouter);
-app.use('/api/videos', videosRouter);
+
 
 // App Set
 const PORT = process.env.PORT || 5002;
