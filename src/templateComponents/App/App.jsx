@@ -22,6 +22,7 @@ import Journals from '../../newComponents/Journals/Journals';
 import HomePage from '../../newComponents/HomePage/HomePage'
 import ExplorePage from '../../newComponents/ExplorePage/ExplorePage'
 import Badges from '../../newComponents/Badges/Badges';
+import FileUploads from '../../newComponents/FileUploads/FileUploads';
 import './App.css';
 import ContentDetails from '../../newComponents/ContentDetailsPage/ContentDetailsPage';
 
@@ -142,6 +143,14 @@ function App() {
           >
             <Badges />
           </ProtectedRoute>
+          <ProtectedRoute
+            // logged in shows UserPage else shows LoginPage
+            exact
+            path="/fileuploads"
+          >
+            <FileUploads />
+          </ProtectedRoute>
+
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>
