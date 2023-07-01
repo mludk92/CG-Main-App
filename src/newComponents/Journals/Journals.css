@@ -2,23 +2,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-  
-  .mood-select-wrapper {
+}
+
+.mood-select-wrapper {
     display: flex;
     align-items: center;
     margin-right: 8px;
-  }
-  
-  .mood-label {
+}
+
+.mood-label {
     margin-right: 4px;
-  }
-  
-  .mood-select-input {
+}
+
+.mood-select-input {
     height: 32px;
-  }
-  
-  .submit-button {
+}
+
+.submit-button {
     height: 32px;
     padding: 0 16px;
-  }
+}
