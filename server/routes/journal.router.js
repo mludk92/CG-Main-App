@@ -86,4 +86,14 @@ router.delete('/', (req, res) => {
   }
 });
 
+router.put('/', (req, res) => {
+  console.log('/journal PUT route');
+
+  if (req.isAuthenticated()) {
+    const updatedEntry = req.body;
+
+    const updateQuery = `UPDATE "journal" WHERE id = $1`;
+  }
+});
+
 module.exports = router;

@@ -29,11 +29,14 @@ function Journals() {
 
   // State for the modal
   const [isModalOpen, setModalOpen] = useState(false);
-  const [editedEntry, setEditedEntry] = useState('');
+  const [editedEntry, setEditedEntry] = useState({ journal: '', mood: '' });
+  // Storing new journal entry and mood in useState
+  const [newEntry, setEntry] = useState({ journal: '', mood: 1, date: currentDate });
 
   // Function to open the modal and set the edited entry
-  const handleOpenModal = (entry) => {
-    setEditedEntry(entry);
+  const handleOpenModal = (entry, mood) => {
+    console.log(entry, mood);
+    setEditedEntry({ journal: entry, mood: mood });
     setModalOpen(true);
   };
 
@@ -44,15 +47,11 @@ function Journals() {
 
   // Function to handle the submit of the edited entry
   const handleEditSubmit = () => {
-    // Perform the necessary logic with the edited entry
-    // ...
+    dispatch({ type: 'EDIT_JOURNAL_ENTRY', payload: editedEntry });
 
     // Close the modal
     handleCloseModal();
   };
-
-  // Storing new journal entry and mood in useState
-  const [newEntry, setEntry] = useState({ journal: '', mood: 1, date: currentDate });
 
   // Handle change for journal entry
   const handleEntryChange = (event) => {
@@ -167,7 +166,7 @@ function Journals() {
                   {/* Edit journal entry icon */}
                   <IconButton
                     aria-label="Edit"
-                    onClick={() => handleOpenModal(entry.journal)}
+                    onClick={() => handleOpenModal(entry.journal, entry.mood)}
                     style={{ marginTop: '-15px', marginRight: '-5px' }}
                   >
                     <EditIcon />
@@ -204,17 +203,50 @@ function Journals() {
               </Typography>
               <TextField
                 multiline
-                rows={5}
-                value={editedEntry}
-                onChange={(event) => setEditedEntry(event.target.value)}
+                rows={10}
+                value={editedEntry.journal}
+                onChange={(event) => setEditedEntry({ ...editedEntry, journal: event.target.value })}
                 fullWidth
                 variant="outlined"
               />
-              <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
-                <button className="submit-button" type="submit">
+              <br /><br />
+              <div className="mood-select-container">
+                <div className="mood-select-wrapper">
+                  <InputLabel className="mood-label">Mood:</InputLabel>
+                  <Select
+                    value={editedEntry.mood}
+                    onChange={(event) => setEditedEntry({ ...editedEntry, mood: event.target.value })}
+                    className="mood-select-input"
+                    MenuProps={{
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      },
+                      transformOrigin: {
+                        vertical: "top",
+                        horizontal: "left"
+                      }
+                    }}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                  </Select>
+                </div>
+                <button
+                  className="submit-button"
+                  type="submit"
+                  onClick={handleEditSubmit}
+                >
                   Submit
                 </button>
               </div>
+
+
+
+
             </CardContent>
           </Card>
         </div>

@@ -22,3 +22,21 @@
     height: 32px;
     padding: 0 16px;
 }
+
+.modal-mood-submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.modal-mood-select {
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.mood-select-input {
+    width: 80px;
+    margin-right: 16px;
+}
