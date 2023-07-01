@@ -16,6 +16,7 @@ const journalRouter = require('./routes/journal.router')
 
 // Body parser middleware
 app.use(bodyParser.json());
+app.use(bodyParser.text());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Passport Session Configuration //

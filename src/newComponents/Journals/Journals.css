@@ -1,0 +1,24 @@
+.mood-select-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .mood-select-wrapper {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+  }
+  
+  .mood-label {
+    margin-right: 4px;
+  }
+  
+  .mood-select-input {
+    height: 32px;
+  }
+  
+  .submit-button {
+    height: 32px;
+    padding: 0 16px;
+  }
