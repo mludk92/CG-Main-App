@@ -29,14 +29,13 @@ function Journals() {
 
   // State for the modal
   const [isModalOpen, setModalOpen] = useState(false);
-  const [editedEntry, setEditedEntry] = useState({ journal: '', mood: '' });
+  const [editedEntry, setEditedEntry] = useState({ journal: '', mood: '', id: '' });
   // Storing new journal entry and mood in useState
   const [newEntry, setEntry] = useState({ journal: '', mood: 1, date: currentDate });
 
   // Function to open the modal and set the edited entry
-  const handleOpenModal = (entry, mood) => {
-    console.log(entry, mood);
-    setEditedEntry({ journal: entry, mood: mood });
+  const handleOpenModal = (entry, mood, id) => {
+    setEditedEntry({ journal: entry, mood: mood, id: id });
     setModalOpen(true);
   };
 
@@ -166,7 +165,7 @@ function Journals() {
                   {/* Edit journal entry icon */}
                   <IconButton
                     aria-label="Edit"
-                    onClick={() => handleOpenModal(entry.journal, entry.mood)}
+                    onClick={() => handleOpenModal(entry.journal, entry.mood, entry.id)}
                     style={{ marginTop: '-15px', marginRight: '-5px' }}
                   >
                     <EditIcon />

@@ -92,7 +92,20 @@ router.put('/', (req, res) => {
   if (req.isAuthenticated()) {
     const updatedEntry = req.body;
 
-    const updateQuery = `UPDATE "journal" WHERE id = $1`;
+    const updateQuery = `UPDATE journal SET "journal" = $1, "mood" = $2 WHERE id = $3`;
+
+    pool
+      .query(updateQuery, [updatedEntry.journal, updatedEntry.mood, updatedEntry.id])
+      .then(() => {
+        console.log('Edit journal successful');
+        res.sendStatus(201);
+      })
+      .catch((error) => {
+        console.log('Error in Journal Entry Edit', error);
+        res.sendStatus(500);
+      })
+  } else {
+    res.sendStatus(403);
   }
 });
 

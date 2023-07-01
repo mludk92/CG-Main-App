@@ -57,6 +57,7 @@ function* editJournalEntry(action) {
       withCredentials: true,
     };
 
+    console.log(payload);
     yield axios.put('/journal', payload, config);
 
     // Dispatch an action to update the Redux store
