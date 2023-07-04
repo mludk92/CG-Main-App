@@ -15,18 +15,10 @@ function Nav() {
 
   return (
     <Box>
-      {/* If no user is logged in, show these links */}
-      {!user.id && (
-        // If there's no user, show login/registration links
-        <Link className="navLink" to="/login">
-          Login / Register
-        </Link>
-      )}
-
       {/* If a user is logged in, show these links */}
       {user.id && (
         <Paper elevation={3} sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }}>
-          <BottomNavigation>
+          <BottomNavigation sx={{ display: 'flex', alignItems: 'center' }}>
             <BottomNavigationAction 
               component={Link}
               to='/home'
