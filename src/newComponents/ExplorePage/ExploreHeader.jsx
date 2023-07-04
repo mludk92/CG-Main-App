@@ -7,7 +7,6 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import ShortcutOutlinedIcon from '@mui/icons-material/ShortcutOutlined';
 import FocusTrap from '@mui/base/FocusTrap';
-import FormControl, { useFormControl } from '@mui/material/FormControl';
 import { useState } from 'react';
 
 function ExploreHeader() {
@@ -19,22 +18,26 @@ function ExploreHeader() {
     }
     const searchContent = () => {
         console.log('Testing search: ' + searchText);
+        setSearchFocus(false);
     }
 
     return(
         <Box sx={{ m: 2, display: 'flex' }}>
             <Typography variant='h4'>Explore</Typography>
-            <FocusTrap>
-                <Paper component="form" onFocus={() => setSearchFocus(true)} onBlur={() => setSearchFocus(false)}
-                sx={{ ml: 'auto', p: '2px 4px', display: 'flex', alignItems: 'center', width: 200, '&:focus-within':{ width: '90%', height: '5%', mx: 'auto', position: 'absolute' } }}>
-                    <SearchIcon />
-                    <InputBase placeholder='Search' sx={{ ml: 1, flex: 1 }} value={searchText} onSubmit={searchContent} onChange={searchChange} />
-                    {searchFocus && (
-                        <Button variant='contained' onClick={searchContent}>
+            <FocusTrap open={searchFocus} disableRestoreFocus disableAutoFocus>
+                { searchFocus ? 
+                    <Paper component="form" id="searchBox"
+                    sx={{ display: 'flex', alignItems: 'center', width: '93%', height: '5%', mx: 'auto', position: 'absolute' }}>
+                        <SearchIcon sx={{ ml: 1 }} />
+                        <InputBase placeholder='Search' sx={{ ml: 1, flex: 1 }} value={searchText} onSubmit={searchContent} onChange={searchChange} />
+                        <Button variant='contained' onClick={searchContent} sx={{ mr: 1 }}>
                             <ShortcutOutlinedIcon />
                         </Button>
-                    )}
-                </Paper>
+                    </Paper> : 
+                    <Paper component="form" id="searchBox" onFocus={() => setSearchFocus(true)} sx={{ ml: 'auto', p: '2px 4px', display: 'flex', alignItems: 'center', width: 200 }}>
+                        <SearchIcon />
+                        <InputBase placeholder='Search' sx={{ ml: 1, flex: 1 }} value={searchText} />
+                    </Paper>}
             </FocusTrap>
         </Box>
     );
