@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardContent, Typography, IconButton, Box } from "@mui/material";
+import { Card, CardContent, Typography, IconButton, Box, Button, Modal } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -27,8 +27,30 @@ function Journals() {
   // Get current date
   const currentDate = formatDate(new Date().toISOString());
 
+  // State for the modal
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [editedEntry, setEditedEntry] = useState({ journal: '', mood: '', id: '' });
   // Storing new journal entry and mood in useState
   const [newEntry, setEntry] = useState({ journal: '', mood: 1, date: currentDate });
+
+  // Function to open the modal and set the edited entry
+  const handleOpenModal = (entry, mood, id) => {
+    setEditedEntry({ journal: entry, mood: mood, id: id });
+    setModalOpen(true);
+  };
+
+  // Function to close the modal
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  // Function to handle the submit of the edited entry
+  const handleEditSubmit = () => {
+    dispatch({ type: 'EDIT_JOURNAL_ENTRY', payload: editedEntry });
+
+    // Close the modal
+    handleCloseModal();
+  };
 
   // Handle change for journal entry
   const handleEntryChange = (event) => {
@@ -117,31 +139,43 @@ function Journals() {
 
         {/* Mapping journalEntries to be displayed on cards */}
         {journalEntries.map((entry, index) => (
-          <Card key={index} variant="outlined" style={{ marginBottom: '10px' }}>
+          <Card
+            key={index}
+            variant="outlined"
+            style={{ marginBottom: '10px' }}
+          >
             <CardContent>
-
-              <Box display="flex" justifyContent="space-between" alignItems="center">
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+              >
 
                 {/* Date and Mood from entry */}
-                <Typography variant="subtitle2" style={{ marginTop: '-13px' }}>
-                  <span>{formatDate(entry.entry_date)}</span> - <span>Mood: {entry.mood}</span>
+                <Typography
+                  variant="subtitle2"
+                  style={{ marginTop: '-13px' }}
+                >
+                  <span>
+                    {formatDate(entry.entry_date)}</span> - <span>Mood: {entry.mood}
+                  </span>
                 </Typography>
 
                 <div>
                   {/* Edit journal entry icon */}
-                  <IconButton aria-label="Edit" style={{
-                    marginTop: '-15px',
-                    marginRight: '-5px'
-                  }}>
+                  <IconButton
+                    aria-label="Edit"
+                    onClick={() => handleOpenModal(entry.journal, entry.mood, entry.id)}
+                    style={{ marginTop: '-15px', marginRight: '-5px' }}
+                  >
                     <EditIcon />
                   </IconButton>
 
                   {/* Delete journal entry icon */}
-                  <IconButton aria-label="Delete" onClick={() => handleDeleteEntry(entry.id)}
-                    style={{
-                      marginTop: '-15px',
-                      marginRight: '-15px'
-                    }}
+                  <IconButton
+                    aria-label="Delete"
+                    onClick={() => handleDeleteEntry(entry.id)}
+                    style={{ marginTop: '-15px', marginRight: '-15px' }}
                   >
                     <DeleteIcon />
                   </IconButton>
@@ -156,8 +190,67 @@ function Journals() {
             </CardContent>
           </Card>
         ))}
-
       </div>
+
+      {/* Modal for editing journal entry */}
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
+        <div className="modal-container">
+          <Card variant="outlined">
+            <CardContent>
+              <Typography variant="h6" style={{ textAlign: 'center' }}>
+                Edit Journal Entry
+              </Typography>
+              <TextField
+                multiline
+                rows={10}
+                value={editedEntry.journal}
+                onChange={(event) => setEditedEntry({ ...editedEntry, journal: event.target.value })}
+                fullWidth
+                variant="outlined"
+              />
+              <br /><br />
+              <div className="mood-select-container">
+                <div className="mood-select-wrapper">
+                  <InputLabel className="mood-label">Mood:</InputLabel>
+                  <Select
+                    value={editedEntry.mood}
+                    onChange={(event) => setEditedEntry({ ...editedEntry, mood: event.target.value })}
+                    className="mood-select-input"
+                    MenuProps={{
+                      anchorOrigin: {
+                        vertical: "bottom",
+                        horizontal: "left"
+                      },
+                      transformOrigin: {
+                        vertical: "top",
+                        horizontal: "left"
+                      }
+                    }}
+                  >
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                  </Select>
+                </div>
+                <button
+                  className="submit-button"
+                  type="submit"
+                  onClick={handleEditSubmit}
+                >
+                  Submit
+                </button>
+              </div>
+
+
+
+
+            </CardContent>
+          </Card>
+        </div>
+      </Modal>
+
     </div>
   );
 }
