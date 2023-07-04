@@ -9,7 +9,7 @@ function ContentDetails() {
             <h3 className="title">Content Details</h3>
             <div className="content">
                 <img 
-                    src="larger-images/rocks.png" 
+                    src="images/rocks.png" 
                     alt="Content Image" 
                     style={{ border: '1px solid black' }}
                 />
