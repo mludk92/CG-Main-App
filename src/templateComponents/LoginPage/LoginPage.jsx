@@ -5,7 +5,7 @@ import LoginPageFooter from "./LoginPageFooter";
 
 function LoginPage() {
   return (
-    <div style={{ height: "100vh", overflowY: "auto" }}>
+    <div style={{height: "100vh", overflowY: "auto" }}>
       <LoginPageHeader />
       <LoginForm />
       <LoginPageFooter />

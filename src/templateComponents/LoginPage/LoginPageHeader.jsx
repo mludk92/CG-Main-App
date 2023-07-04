@@ -15,11 +15,11 @@ function LoginPageHeader () {
           top: -30,
         }}
       />
-
+    
       <Typography
         textAlign="center"
         variant="h3"
-        style={{ color: "#3d71b8"}}
+        style={{ color: "#3d71b8", marginTop: 80}}
       >
         Welcome!
       </Typography>
