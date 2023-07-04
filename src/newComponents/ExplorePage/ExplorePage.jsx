@@ -1,11 +1,19 @@
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Divider from '@mui/material/Divider';
+import ExploreHeader from './ExploreHeader';
+import ExploreFilter from './ExploreFilter';
+import ExploreList from './ExploreList';
+
 function Explore() {
 
     return (
-        <div className="container">
-            <h3>Welcome to the Explore Page</h3>
-            <p>Search bar / filter goes here</p>
-            <p>All mapped content goes here</p>
-        </div>
+        <Box>
+            <ExploreHeader />
+            <Divider variant='middle' sx={{ mt: 2 }} />
+            <ExploreFilter />
+            <ExploreList />
+        </Box>
     )
 }
 

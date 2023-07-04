@@ -34,7 +34,7 @@ function NewSection() {
     ]
 
     return(
-        <Box sx={{ mt: 30}}>
+        <Box sx={{ mt: 3 }}>
             <Typography variant='h5' sx={{ ml: 2 }}>New</Typography>
             <Box sx={{ maxHeight: 200, overflow: 'scroll' }}>
                 <Stack direction="row" className='cardList'>
