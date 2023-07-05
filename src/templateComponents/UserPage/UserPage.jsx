@@ -25,7 +25,7 @@ function UserPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-
+  
 
   useEffect(() => {
     dispatch({ type: "FETCH_BADGES" });
@@ -80,7 +80,8 @@ function UserPage() {
         </div>
         <div style={{ flex: 1 }}>
           <h5>Latest Badge:</h5>
-          {latestBadge.summary}
+          {latestBadge ? <p>{latestBadge.summary}</p> : "Loading..."}
+  {latestBadge && (
           <Card
             sx={{
               display: "flex",
@@ -104,6 +105,7 @@ function UserPage() {
               <p>{latestBadge.badge_name}</p>
             </div>
           </Card>
+          )}
         </div>
       </div>
       <center>
