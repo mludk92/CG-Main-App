@@ -20,7 +20,7 @@ function Badges() {
         />
       </div>
       <h3>Welcome to the Badges Page</h3>
-      <div className="badgescontainer1">
+      <div className="badgescontainer">
         {badgesEarned.map((badge) => {
           const isCurrentUserBadge = badge.user_id !== null && badge.user_id === 1;
           const badgeImageSrc = isCurrentUserBadge
@@ -28,20 +28,31 @@ function Badges() {
             : `/badges/${badge.badge_name.replace(/\s/g, '')}Gray.png`;
   
           return (
-            <img
-              key={badge.id}
-              className="badges"
-              src={badgeImageSrc}
-              alt={badge.badge_name}
-            />
+            <div key={badge.id} className="badge-container">
+              <img
+                className="badges"
+                src={badgeImageSrc}
+                alt={badge.badge_name}
+              />
+              {isCurrentUserBadge && (
+                <div className="checkmark">
+                  <img
+                    src="/badges/checkmark.png"
+                    alt="Checkmark"
+                    className="checkmark-icon"
+                  />
+                </div>
+              )}
+              <div className="badge-summary">
+                <p>{badge.summary}</p>
+              </div>
+            </div>
           );
         })}
       </div>
-
     </div>
   );
-  
-  
+
 }
 
 export default Badges;

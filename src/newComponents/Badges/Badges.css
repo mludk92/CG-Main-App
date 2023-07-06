@@ -1,5 +1,4 @@
 body {
-
   margin: 0;
   padding: 0;
 }
@@ -13,7 +12,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-
 }
 
 .header1 {
@@ -23,7 +21,6 @@ body {
   border-bottom-right-radius: 5%;
   width: 100%;
   margin: 0;
-  
 }
 
 .header1::after {
@@ -58,4 +55,38 @@ body {
 .badges {
   max-width: 150px;
   max-height: 150px;
+}
+
+.badge-container {
+  position: relative;
+}
+
+.badge-summary {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px;
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.badge-container:hover .badge-summary {
+  opacity: 1;
+  visibility: visible;
+}
+.checkmark {
+  position: absolute;
+  bottom: 5px;
+  right: -10px;
+}
+
+.checkmark-icon {
+  width: 40px;
+  height: 40px;
 }
