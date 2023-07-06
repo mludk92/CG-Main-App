@@ -1,0 +1,61 @@
+body {
+
+  margin: 0;
+  padding: 0;
+}
+
+.container1 {
+  text-align: center;
+  width: 100vw;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.header1 {
+  background-color: #3D71B8;
+  border-style: none;
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
+  width: 100%;
+  margin: 0;
+  
+}
+
+.header1::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.badges-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+}
+
+.logo {
+  width: 100px;
+  height: 50px;
+  margin-left: 20px;
+}
+
+.badgescontainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  justify-items: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.badges {
+  max-width: 150px;
+  max-height: 150px;
+}

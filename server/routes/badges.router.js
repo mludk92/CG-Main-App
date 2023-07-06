@@ -9,14 +9,19 @@ router.get('/', (req, res) => {
     // Selects rows that displays:
     // badge_id, badge_name, and summary 
     // for each badge associated with a user in the badge_earned table
-    const queryText = `
-    SELECT badge_earned.badge_id, badges.badge_name, badges.summary 
-    FROM badge_earned 
-    JOIN "user" ON badge_earned.user_id = "user".id 
-    JOIN badges ON badge_earned.badge_id = badges.id 
-    WHERE user_id= $1;`;
+    const queryText = 
+    `select b.id, b.badge_name, b.summary, be.user_id, u.username from badges b
+    left outer join badge_earned be on 
+    be.badge_id = b.id
+    left outer join "user" u
+    on u.id = be.user_id`
+    // SELECT badge_earned.badge_id, badges.badge_name, badges.summary 
+    // FROM badge_earned 
+    // JOIN "user" ON badge_earned.user_id = "user".id 
+    // JOIN badges ON badge_earned.badge_id = badges.id 
+    // WHERE user_id= $1;`;
 
-    pool.query(queryText, [userId]).then((response) => {
+    pool.query(queryText).then((response) => {
         res.send(response.rows)
     }).catch((err) => {
         console.log('GET call to /api/badges failed: ', err);

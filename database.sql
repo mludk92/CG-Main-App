@@ -90,7 +90,7 @@ VALUES ('First Meditation', 'View your first piece on content'),
 INSERT INTO badge_earned (badge_id, user_id)
 VALUES (1, 1), (2, 1);
 
--- CREATE DATABASE "aws-file-upload";
+
 
 -- Table structure
 CREATE TABLE "images" (
