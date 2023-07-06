@@ -4,3 +4,50 @@
     background-color: #83C55F; /* Secondary color (inside color) */
     padding: 2px; 
   }
+  .mood-cell {
+    text-align: center;
+  }
+  
+  .mood-value {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    margin-right: 4px;
+    font-size: 20px;
+    color: white;
+    text-shadow: -1px -1px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  }
+  
+  .mood-1 {
+    background-color: red;
+  }
+  
+  .mood-2 {
+    background-color: rgb(251, 125, 0);
+  }
+  
+  .mood-3 {
+    background-color: rgb(250, 250, 5);
+  }
+  
+  .mood-4 {
+    background-color: rgb(102, 204, 0);
+  }
+  .mood-5 {
+    background-color: green;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
