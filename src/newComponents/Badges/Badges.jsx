@@ -19,7 +19,7 @@ function Badges() {
           className="logo"
         />
       </div>
-      <h3>Welcome to the Badges Page</h3>
+      
       <div className="badgescontainer">
         {badgesEarned.map((badge) => {
           const isCurrentUserBadge = badge.user_id !== null && badge.user_id === 1;
