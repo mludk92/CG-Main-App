@@ -25,7 +25,11 @@ function UserPage() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  
+  // Filter the badges earned by the logged-in user --Mitch
+  console.log(badges)
+  const userBadges = badges.filter(
+    (badge) => badge.user_id !== null && badge.user_id === user.id
+  );
 
   useEffect(() => {
     dispatch({ type: "FETCH_BADGES" });
@@ -74,7 +78,7 @@ function UserPage() {
               />
             </div>
             <div>
-              <h2 style={{ color: "#3d71b8" }}>{badges.length}</h2>
+               <h2 style={{ color: "#3d71b8" }}>{userBadges.length}</h2> {/* Mitch Update*/}
             </div>
           </div>
         </div>
