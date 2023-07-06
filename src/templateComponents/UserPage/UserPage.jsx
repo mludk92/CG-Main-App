@@ -17,6 +17,8 @@ import {
   TableRow,
   Button,
 } from "@mui/material";
+import "./UserPage.css";
+
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
@@ -46,6 +48,7 @@ function UserPage() {
   };
 
   return (
+
     <div className="container">
       <Paper
         sx={{
@@ -78,43 +81,43 @@ function UserPage() {
               />
             </div>
             <div>
-               <h2 style={{ color: "#3d71b8" }}>{userBadges.length}</h2> {/* Mitch Update*/}
+              <h2 style={{ color: "#3d71b8" }}>{userBadges.length}</h2> {/* Mitch Update*/}
             </div>
           </div>
         </div>
         <div style={{ flex: 1 }}>
           <h5>Latest Badge:</h5>
           {latestBadge ? <p>{latestBadge.summary}</p> : "Loading..."}
-  {latestBadge && (
-          <Card
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              padding: "10px",
-            }}
-          >
-            <EmojiEventsTwoToneIcon
-              style={{ boxShadow: "0px 0px 25px rgba(131, 197, 95, 0.5)" }}
-              fontSize="small"
-              className="event-icon"
-            />
-            <div
-              style={{
+          {latestBadge && (
+            <Card
+              sx={{
                 display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
+                alignItems: "center",
+                gap: "10px",
+                padding: "10px",
               }}
             >
-              <p>{latestBadge.badge_name}</p>
-            </div>
-          </Card>
+              <EmojiEventsTwoToneIcon
+                style={{ boxShadow: "0px 0px 25px rgba(131, 197, 95, 0.5)" }}
+                fontSize="small"
+                className="event-icon"
+              />
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                }}
+              >
+                <p>{latestBadge.badge_name}</p>
+              </div>
+            </Card>
           )}
         </div>
       </div>
       <center>
         <button
-          style={{ marginTop: "10px", marginBottom:"5px", color: "#3d71b8" }}
+          style={{ marginTop: "10px", marginBottom: "5px", color: "#3d71b8" }}
           type="button"
           className="btn btn_asLink"
           onClick={() => {
@@ -154,7 +157,10 @@ function UserPage() {
               <TableRow key={index}>
                 <TableCell>{formatDate(entry.entry_date)}</TableCell>
                 <TableCell>{entry.journal}</TableCell>
-                <TableCell>{entry.mood}</TableCell>
+                <TableCell className={`mood-cell`}>
+                  <span className={`mood-value mood-${parseInt(entry.mood)}`}>{entry.mood}</span>
+                </TableCell>
+
               </TableRow>
             ))}
           </TableBody>
