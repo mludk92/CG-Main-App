@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -11,9 +13,12 @@ import Typography from '@mui/material/Typography';
 
 function ExploreContent({ content }) {
 
+    // Remove the last 4 characters (file extension)
     const trimExtension = (filename) => {
-        return filename.slice(0, -4); // Remove the last 4 characters (file extension)
+        return filename.slice(0, -4);
     };
+
+    const [isFavorite, setIsFavorite] = useState(false);
 
     return (
         <Card
@@ -53,11 +58,21 @@ function ExploreContent({ content }) {
                         width: "100%"
                     }}
                 >
-                    <FavoriteBorderOutlinedIcon
-                        sx={{
-                            color: '#3d71b8'
-                        }}
-                    />
+                    {isFavorite ? (
+                        <FavoriteIcon
+                            onClick={() => setIsFavorite(false)}
+                            sx={{
+                                color: '#3d71b8'
+                            }}
+                        />
+                    ) : (
+                        <FavoriteBorderOutlinedIcon
+                            onClick={() => setIsFavorite(true)}
+                            sx={{
+                                color: '#3d71b8'
+                            }}
+                        />
+                    )}
                 </Box>
             </CardContent>
         </Card>
