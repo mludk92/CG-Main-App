@@ -84,8 +84,8 @@ VALUES
 INSERT INTO badges (badge_name, summary)
 VALUES ('First Meditation', 'View your first piece on content'),
     ('On Fire', 'Log in 3 days in a row.'),
-    ('Reflection Time', 'Write your first journal entry');
-
+    ('Reflection Time', 'Write your first journal entry'),
+    ('Meditation Scholar', 'View 100 meditations');
 -- Dummy earned badges for testing purposes
 INSERT INTO badge_earned (badge_id, user_id)
 VALUES (1, 1), (2, 1);
