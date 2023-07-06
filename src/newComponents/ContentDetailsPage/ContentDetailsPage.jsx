@@ -5,7 +5,7 @@ import './ContentDetailsPage.css'
 function ContentDetails() {
 
     return (
-        <div>
+        <div style={{ overflow: 'hidden' }}>
             <h3 className="title">Content Details</h3>
             <div className="content">
                 <img 
@@ -15,7 +15,10 @@ function ContentDetails() {
                 />
 
                 <div className="audio-player">
-                    <AudioPlayer src="audio/Financial-wellbeing-meditation.m4a" />
+                    <AudioPlayer 
+                        src="audio/Financial-wellbeing-meditation.m4a" 
+                        style={{marginBottom: '60px' }}
+                    />
                 </div>
             </div>
         </div>
