@@ -54,7 +54,7 @@ body {
   width: 95%;
   height: 40vh; /* Use viewport height unit for adaptive height */
   margin: 0 auto;
-  margin-top: 50px;
+  margin-top: 20px;
   overflow: auto; /* Add overflow property to enable scrollbar */
   position: relative; /* Add position property for positioning the indicator */
   box-shadow: inset 0 0 30px #3D71B8; /* Add inset box shadow */
@@ -129,8 +129,9 @@ body {
 }
 .progress-container {
   position: relative;
-  margin-top:50px ;
+  margin-top:20px ;
   width: 100%;
+  
   display: flex;
   justify-content: center; /* Center the progress bar horizontally */
   align-items: center; /* Center the progress bar vertically */
@@ -166,6 +167,7 @@ body {
 
 .progress-label {
   text-align: center;
-  font-size: 20px;
+  font-size: 90%;
   margin: 0;
+  padding-top: 10px;
 }

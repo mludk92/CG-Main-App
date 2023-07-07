@@ -109,7 +109,9 @@ function Badges() {
             color: "#83C55F",
             borderColor: "#3D71B8",
             borderStyle: "solid",
+            borderWidth: "6px",
             backgroundColor: "transparent",
+            boxShadow: "0 0 20px 5px rgba(255, 255, 0, 0.5), 0 0 10px 0 rgba(255, 255, 0, 0.5)",
           }}
           className="progress-bar"
         />
