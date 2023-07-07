@@ -9,11 +9,41 @@ function Badges() {
   const logindata = useSelector((store) => store.logindata);
 
   const [filter, setFilter] = useState("all"); // Filter state
+  const [showTooltip, setShowTooltip] = useState(false);
 
   useEffect(() => {
     dispatch({ type: "FETCH_BADGES" });
     dispatch({ type: "FETCH_LOGIN_DATA" });
   }, [dispatch]);
+
+  // ...
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = document.querySelector(".badgescontainer");
+      const indicator = document.querySelector(".indicator");
+
+      if (container && container.scrollTop > 0) {
+        indicator.classList.add("transparent");
+      } else {
+        indicator.classList.remove("transparent");
+      }
+    };
+
+    const container = document.querySelector(".badgescontainer");
+    if (container) {
+      container.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
+
+  // ...
+
 
   // Add a check to ensure logindata array has data
   if (!logindata || logindata.length === 0) {
@@ -23,11 +53,11 @@ function Badges() {
   const progressLevel = logindata[0].streak * 20; // Set the desired progress level here (0-100)
   const progressLabels = [
     "",
-    "Every day in every way, I am getting stronger.<br/>Great job! You have logged for 1 day in a row!",
+    "Every day in every way, I am getting stronger.<br/>Great job! You have logged in for 1 day in a row!",
     "In me, I trust.<br/>2 days now! Keep it up!",
-    "Inhale the future, exhale the past.<br/>Amazing job! You have logged for 3 days in a row!",
-    "I am open to the possibilities of the Universe.<br/> What an achievement! You have logged for 4 days in a row!",
-    "I am a magnet for health, wealth, and happiness. <br/> The Progress bar is filled, just like your heart!<br/> You have logged for 5 days in a row!",
+    "Inhale the future, exhale the past.<br/>Amazing job! You have logged in for 3 days in a row!",
+    "I am open to the possibilities of the Universe.<br/> What an achievement! You have logged infor 4 days in a row!",
+    "I am a magnet for health, wealth, and happiness. <br/> The Progress bar is filled, just like your heart!<br/> You have logged in for 5 days in a row!",
   ];
 
   const handleFilterChange = (event) => {
@@ -50,27 +80,6 @@ function Badges() {
     }
     return false;
   });
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const container = document.querySelector(".badgescontainer");
-      const indicator = document.querySelector(".indicator");
-  
-      if (container.scrollTop + container.clientHeight >= container.scrollHeight) {
-        indicator.classList.add("transparent");
-      } else {
-        indicator.classList.remove("transparent");
-      }
-    };
-  
-    const container = document.querySelector(".badgescontainer");
-    container.addEventListener("scroll", handleScroll);
-  
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-  
 
   return (
     <div className="main-container">
@@ -147,6 +156,7 @@ function Badges() {
           className="progress-label"
           dangerouslySetInnerHTML={{ __html: progressLabels[Math.floor(progressLevel / 20)] }}
         ></div>
+        {showTooltip && <div className="tooltip">Tooltip Text</div>}
       </div>
     </div>
   );

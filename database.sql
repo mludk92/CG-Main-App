@@ -4,6 +4,10 @@
 -- ex. SELECT * FROM "user";
 -- Otherwise you will have errors!
 -- Create the ‘user’ table
+
+-----------------------------------------------
+-- create tables 
+
 CREATE TABLE "user" (
  id SERIAL PRIMARY KEY,
  first_name VARCHAR(50),
@@ -62,57 +66,38 @@ CREATE TABLE badge_earned (
  badge_id INT REFERENCES badges(id),
  user_id INT REFERENCES "user"(id)
 );
-
- select * from "user" ;
- select * from journal ;
- select * from "content" ;
- select * from content_seen ;
- select * from badges ;
- select * from badge_earned ;
-
-
-
-
--- Dummy journal entries for testing purposes
-INSERT INTO journal (user_id, journal, entry_date, mood)
-VALUES
- (1, 'Today was a great day!', '2023-06-26', 5),
- (1, 'Feeling a bit tired today.', '2023-06-27', 3),
- (1, 'Had a productive day at work!', '2023-06-28', 4);
-
--- Three examples of badges
-INSERT INTO badges (badge_name, summary)
-VALUES ('First Meditation', 'View your first piece on content'),
-    ('On Fire', 'Log in 3 days in a row.'),
-    ('Reflection Time', 'Write your first journal entry'),
-    ('Meditation Scholar', 'View 100 meditations');
--- Dummy earned badges for testing purposes
-INSERT INTO badge_earned (badge_id, user_id)
-VALUES (1, 1), (2, 1);
-
-
-
--- Table structure
+-- Table structure for aws piece 
 CREATE TABLE "images" (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(1000) NOT NULL,
-	"type" VARCHAR(50) NOT NULL
+	"type" VARCHAR(50) NOT NULL,
+  author VARCHAR(50) NOT NULL
 );
 
 -- Create the "audio" table
 CREATE TABLE audio (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(100),
-  type VARCHAR(50)
+  name VARCHAR(100) NOT NULL,
+  type VARCHAR(50) NOT NULL,
+  author VARCHAR(50) NOT NULL
 );
 
 -- Create the "videos" table
 CREATE TABLE videos (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(100),
-  type VARCHAR(50)
+  name VARCHAR(100) NOT NULL,
+  type VARCHAR(50) NOT NULL,
+  author VARCHAR(50) NOT NULL,
 );
 
+--login table to track user logins will be used to count hot streaks. 
+CREATE TABLE login_history (
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  login_datetime TIMESTAMPTZ NOT NULL
+);
+-------------------------------------------------------------
+-- Create views 
 -- will replace the content table. 
 CREATE VIEW videos_audio_view AS
 SELECT ROW_NUMBER() OVER (order by 1) AS id, subquery.content_id, subquery.name, subquery.type
@@ -124,30 +109,6 @@ FROM (
     FROM audio
 ) AS subquery;
 select * from videos_audio_view
-
-
-
-select * from content_view;
-
---login table to track user logins will be used to count hot streaks. 
-CREATE TABLE login_history (
-  id SERIAL PRIMARY KEY,
-  user_id INT NOT NULL,
-  login_datetime TIMESTAMPTZ NOT NULL
-);
-
-select * from login_history;
-INSERT INTO login_history (user_id, login_datetime)
-VALUES (1, '2023-07-01 00:00:00');
-
-INSERT INTO login_history (user_id, login_datetime)
-VALUES (1, '2023-07-04 00:00:00');
-
-INSERT INTO login_history (user_id, login_datetime)
-VALUES (1, '2023-07-05 00:00:00');
-
-INSERT INTO login_history (user_id, login_datetime)
-VALUES (1, '2023-07-06 00:00:00');
 
 -- Create a view to display the results
 CREATE VIEW login_history_view AS
@@ -183,5 +144,48 @@ SELECT distinct lh.user_id,
 FROM login_history_cte lh
 ORDER BY lh.login_date DESC;
 
+----------------------------------------------------------
+-- Dummy data for testing purposes
+INSERT INTO journal (user_id, journal, entry_date, mood)
+VALUES
+ (1, 'Today was a great day!', '2023-06-26', 5),
+ (1, 'Feeling a bit tired today.', '2023-06-27', 3),
+ (1, 'Had a productive day at work!', '2023-06-28', 4);
+
+-- Three examples of badges
+INSERT INTO badges (badge_name, summary)
+VALUES ('First Meditation', 'View your first piece on content'),
+    ('On Fire', 'Log in 3 days in a row.'),
+    ('Reflection Time', 'Write your first journal entry'),
+    ('Meditation Scholar', 'View 100 meditations'),
+    ('Namaste', 'Write 100 journals entries');
+-- Dummy earned badges for testing purposes
+INSERT INTO badge_earned (badge_id, user_id)
+VALUES (1, 1), (2, 1);
+
+
+select * from login_history;
+INSERT INTO login_history (user_id, login_datetime)
+VALUES (1, '2023-07-01 00:00:00'),
+       (1, '2023-07-04 00:00:00'),
+       (1, '2023-07-05 00:00:00'),
+       (1, '2023-07-06 00:00:00');
+
+-------------------------------------------------------------
+-- select queries for testing purposes
+ select * from "user" ;
+ select * from journal ;
+ select * from "content" ;
+ select * from content_seen ;
+ select * from badges ;
+ select * from badge_earned ;
+
 --Hot streak query from view 
 select * from login_history_view where user_id = 1 limit 1
+
+select * from content_view;
+
+
+
+
+

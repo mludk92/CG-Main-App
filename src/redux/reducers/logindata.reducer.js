@@ -1,4 +1,4 @@
-const logindataReducer = (state = '', action) => {
+const logindataReducer = (state = [], action) => {
     switch (action.type) {
         case 'SET_LOGIN_DATA_LIST':
             return action.payload;
