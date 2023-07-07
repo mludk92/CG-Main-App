@@ -112,3 +112,28 @@ CREATE TABLE videos (
   name VARCHAR(100),
   type VARCHAR(50)
 );
+
+-- will replace the content table. 
+CREATE VIEW videos_audio_view AS
+SELECT ROW_NUMBER() OVER (order by 1) AS id, subquery.content_id, subquery.name, subquery.type
+FROM (
+    SELECT videos.id AS content_id, name, type
+    FROM videos
+    UNION
+    SELECT audio.id AS content_id, name, type
+    FROM audio
+) AS subquery;
+select * from videos_audio_view
+
+
+
+select * from content_view;
+
+--login table to track user logins will be used to count hot streaks. 
+CREATE TABLE login_history (
+  id SERIAL PRIMARY KEY,
+  user_id INT NOT NULL,
+  login_datetime TIMESTAMPTZ NOT NULL
+);
+
+select * from login_history;
