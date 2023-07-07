@@ -16,6 +16,8 @@ const videoRouter = require('./routes/video.router.js');
 const logindataRouter = require('./routes/login.router');
 // journal router added by Mitch
 const journalRouter = require('./routes/journal.router');
+// favorites router added by Erich
+const favoritesRouter = require('./routes/favorites.router');
 
 
 // Body parser middleware
@@ -39,6 +41,7 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/badges', badgesRouter);
+app.use('/favorites', favoritesRouter)
 app.use('/journal', journalRouter);
 app.use('/api/images', imageRouter);
 app.use('/api/audio', audioRouter);
