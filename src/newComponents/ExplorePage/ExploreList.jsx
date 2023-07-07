@@ -1,51 +1,32 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ExploreContent from './ExploreContent';
 
 function ExploreList() {
-    const exampleContent = [
-        { 
-            name: 'Content 1',
-            author: 'author'
-        }, 
-        { 
-            name: 'Content 2',
-            author: 'author'
-        }, 
-        { 
-            name: 'Content 3',
-            author: 'author'
-        }, 
-        { 
-            name: 'Content 4',
-            author: 'author'
-        }, 
-        { 
-            name: 'Content 5',
-            author: 'author'
-        }, 
-        { 
-            name: 'Content 6',
-            author: 'author'
-        }, 
-        { 
-            name: 'Content 7',
-            author: 'author'
-        }, 
-        { 
-            name: 'Content 8',
-            author: 'author'
-        }
-    ]
 
-    return(
+    const [contentList, setContentList] = useState([]);
+
+    useEffect(() => {
+        axios.get('/api/audio')
+            .then(response => {
+                setContentList(response.data);
+            })
+            .catch(error => {
+                console.log('Error retrieving audio files:', error);
+            });
+    }, []);
+
+    return (
         <Box sx={{ mt: 1 }}>
             <Grid container spacing={2} justifyContent={'center'}>
                 {
-                    exampleContent.map((content, i) => (
+                    contentList.map((content, i) => (
                         <Grid item key={i} xs={5}>
                             <ExploreContent
-                                content = {content}
+                                content={content}
                             />
                         </Grid>
                     ))
