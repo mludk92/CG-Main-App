@@ -8,6 +8,7 @@ function FileUploads() {
   const [imageList, setImageList] = useState([]);
   const [audioList, setAudioList] = useState([]);
   const [videoList, setVideoList] = useState([]);
+  const [author, setAuthor] = useState('');
 
   const onFileChange = (event) => {
     const fileToUpload = event.target.files[0];
@@ -30,18 +31,25 @@ function FileUploads() {
 
     let postUrl = '';
     if (fileType.startsWith('image')) {
-      postUrl = `/api/images?imageName=${fileName}&imageType=${fileType}`;
+      postUrl = `/api/images?imageName=${encodeURIComponent(fileName)}&imageType=${encodeURIComponent(fileType)}`;
     } else if (fileType.startsWith('audio')) {
-      postUrl = `/api/audio?audioName=${fileName}&audioType=${fileType}`;
+      postUrl = `/api/audio?audioName=${encodeURIComponent(fileName)}&audioType=${fileType}`; // Remove URL encoding for audioType
     } else if (fileType.startsWith('video')) {
-      postUrl = `/api/video?videoName=${fileName}&videoType=${fileType}`;
+      postUrl = `/api/video?videoName=${encodeURIComponent(fileName)}&videoType=${encodeURIComponent(fileType)}`;
+    }
+
+    // Add the 'author' as a separate parameter in the request URL
+    postUrl += `&author=${encodeURIComponent(author)}`;
+
+    // Log the contents of formData
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
     }
 
     axios
       .post(postUrl, formData)
       .then((response) => {
         console.log('Success!');
-        alert('Success!');
         clearForm();
         getFiles();
       })
@@ -56,7 +64,6 @@ function FileUploads() {
       .delete(`/api/${fileType}/${fileId}`)
       .then((response) => {
         console.log('Success!');
-        alert('File deleted successfully!');
         getFiles();
       })
       .catch((error) => {
@@ -69,6 +76,7 @@ function FileUploads() {
     setFileName('');
     setFileType('');
     setSelectedFile(undefined);
+    setAuthor('');
   };
 
   const getFiles = () => {
@@ -111,6 +119,8 @@ function FileUploads() {
     <div>
       <form onSubmit={sendFileToServer}>
         <input type="file" accept="image/*,audio/*,video/*" onChange={onFileChange} />
+        <br />
+        <input type="text" placeholder="Author" value={author} onChange={(e) => setAuthor(e.target.value)} required />
         <br />
         <button type="submit">Submit</button>
       </form>
