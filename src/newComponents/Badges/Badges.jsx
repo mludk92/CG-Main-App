@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Badges.css";
+import CircularProgress from '@mui/material/CircularProgress';
+
 function Badges() {
   const dispatch = useDispatch();
   const badgesEarned = useSelector((store) => store.badges);
@@ -8,6 +10,16 @@ function Badges() {
   useEffect(() => {
     dispatch({ type: "FETCH_BADGES" });
   }, [dispatch]);
+
+  const progressLevel = 100; // Set the desired progress level here (0-100)
+  const progressLabels = [
+    "",
+    "Every day in every way, I am getting stronger.",
+    "In me, I trust.",
+    "Inhale the future, exhale the past.",
+    "I am open to the possibilities of the Universe.",
+    "I am a magnet for health, wealth, and happiness."
+  ];
 
   return (
     <div className="container1">
@@ -50,9 +62,22 @@ function Badges() {
           );
         })}
       </div>
+
+      {/* Progress Bar */}
+      <div className="progress-container">
+        
+        <CircularProgress
+          variant="determinate"
+          value={progressLevel}
+          size={200}
+          thickness={4}
+          className="progress-bar"
+        />
+        
+      </div>
+      <p className="progress-label">{progressLabels[Math.floor(progressLevel / 20)]}</p>
     </div>
   );
-
 }
 
 export default Badges;
