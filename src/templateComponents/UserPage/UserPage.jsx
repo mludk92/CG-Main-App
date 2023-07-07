@@ -32,13 +32,14 @@ function UserPage() {
   const userBadges = badges.filter(
     (badge) => badge.user_id !== null && badge.user_id === user.id
   );
-
+  console.log(userBadges, 'userBadges')
   useEffect(() => {
     dispatch({ type: "FETCH_BADGES" });
     dispatch({ type: "FETCH_JOURNAL" });
   }, [dispatch]);
 
-  const latestBadge = badges[badges.length - 1];
+
+  const latestBadge = userBadges[userBadges.length - 1];
   console.log(latestBadge)
 
 

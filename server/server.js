@@ -13,6 +13,7 @@ const badgesRouter = require('./routes/badges.router');
 const imageRouter = require('./routes/image.router.js');
 const audioRouter = require('./routes/audio.router.js');
 const videoRouter = require('./routes/video.router.js');
+const logindataRouter = require('./routes/login.router');
 // journal router added by Mitch
 const journalRouter = require('./routes/journal.router');
 
@@ -42,6 +43,7 @@ app.use('/journal', journalRouter);
 app.use('/api/images', imageRouter);
 app.use('/api/audio', audioRouter);
 app.use('/api/video', videoRouter);
+app.use('/api/logindata', logindataRouter);
 
 
 // App Set

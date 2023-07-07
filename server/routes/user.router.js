@@ -42,7 +42,19 @@ router.post('/register', (req, res, next) => {
 // this middleware will run our POST if successful
 // this middleware will send a 404 if not successful
 router.post('/login', userStrategy.authenticate('local'), (req, res) => {
-  res.sendStatus(200);
+  // Insert login history data
+  const userId = req.user.id;
+  const loginDatetime = new Date(); // current date and time
+
+  const queryText = 'INSERT INTO login_history (user_id, login_datetime) VALUES ($1, $2)';
+  pool.query(queryText, [userId, loginDatetime])
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((error) => {
+      console.log('Error inserting login history:', error);
+      res.sendStatus(500);
+    });
 });
 
 // clear all server session information about this user
