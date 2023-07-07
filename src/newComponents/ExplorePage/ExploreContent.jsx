@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import axios from 'axios';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -19,6 +20,28 @@ function ExploreContent({ content }) {
     };
 
     const [isFavorite, setIsFavorite] = useState(false);
+
+    const addFavorite = () => {
+        setIsFavorite(true);
+        axios.post('favorites', { id: content.id })
+            .then(response => {
+                alert(`Added ${content.name} to favorites.`);
+            })
+            .catch(error => {
+                alert('Error adding content to favorites.', error);
+            });
+    }
+
+    const removeFavorite = () => {
+        setIsFavorite(false);
+        axios.delete('/favorites', { data: { id: content.id } })
+            .then(response => {
+                alert(`Removed ${content.name} from favorites.`);
+            })
+            .catch(error => {
+                alert('Error deleteing content from favorites.', error)
+            })
+    }
 
     return (
         <Card
@@ -60,14 +83,14 @@ function ExploreContent({ content }) {
                 >
                     {isFavorite ? (
                         <FavoriteIcon
-                            onClick={() => setIsFavorite(false)}
+                            onClick={() => removeFavorite()}
                             sx={{
                                 color: '#3d71b8'
                             }}
                         />
                     ) : (
                         <FavoriteBorderOutlinedIcon
-                            onClick={() => setIsFavorite(true)}
+                            onClick={() => addFavorite()}
                             sx={{
                                 color: '#3d71b8'
                             }}

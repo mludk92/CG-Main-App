@@ -7,7 +7,7 @@ router.post('/', (req, res) => {
 
     if (req.isAuthenticated()) {
         const userId = req.user.id;
-        const contentId = req.body;
+        const contentId = req.body.id;
         const queryText = `INSERT INTO favorites (user_id, content_id)
             VALUES ($1, $2)`;
 
@@ -30,7 +30,7 @@ router.delete('/', (req, res) => {
 
     if (req.isAuthenticated()) {
         const userId = req.user.id;
-        const contentId = req.body;
+        const contentId = req.body.id;
         const queryText = `DELETE FROM favorites WHERE "user_id" = $1
             AND "content_id" = $2;`;
 
