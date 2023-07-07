@@ -95,6 +95,7 @@ body {
 }
 .progress-container {
   position: relative;
+  margin-top:50px ;
   width: 100%;
   display: flex;
   justify-content: center; /* Center the progress bar horizontally */

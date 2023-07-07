@@ -14,11 +14,11 @@ function Badges() {
   const progressLevel = 100; // Set the desired progress level here (0-100)
   const progressLabels = [
     "",
-    "Every day in every way, I am getting stronger.",
-    "In me, I trust.",
-    "Inhale the future, exhale the past.",
-    "I am open to the possibilities of the Universe.",
-    "I am a magnet for health, wealth, and happiness."
+    "Every day in every way, I am getting stronger.<br/>Great job! You have logged for 1 day in a row!",
+    "In me, I trust.<br/>2 days now! Keep it up!",
+    "Inhale the future, exhale the past.<br/>Amazing job! You have logged for 3 days in a row!",
+    "I am open to the possibilities of the Universe.<br/> What an achievement! You have logged for 4 days in a row!",
+    "I am a magnet for health, wealth, and happiness. <br/> The Progess bar is filled, just like your heart!<br/> You have logged for 5 days in a row!",
   ];
 
   return (
@@ -71,11 +71,18 @@ function Badges() {
           value={progressLevel}
           size={200}
           thickness={4}
+          style={{
+            width: "100px",
+            height: "100px",
+            borderRadius: "100%",
+            color: "#83C55F",
+            backgroundColor: "transparent",
+          }}
           className="progress-bar"
         />
         
       </div>
-      <p className="progress-label">{progressLabels[Math.floor(progressLevel / 20)]}</p>
+      <div className="progress-label" dangerouslySetInnerHTML={{ __html: progressLabels[Math.floor(progressLevel / 20)] }}></div>
     </div>
   );
 }

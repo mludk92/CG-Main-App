@@ -137,3 +137,51 @@ CREATE TABLE login_history (
 );
 
 select * from login_history;
+INSERT INTO login_history (user_id, login_datetime)
+VALUES (1, '2023-07-01 00:00:00');
+
+INSERT INTO login_history (user_id, login_datetime)
+VALUES (1, '2023-07-04 00:00:00');
+
+INSERT INTO login_history (user_id, login_datetime)
+VALUES (1, '2023-07-05 00:00:00');
+
+INSERT INTO login_history (user_id, login_datetime)
+VALUES (1, '2023-07-06 00:00:00');
+
+-- Create a view to display the results
+CREATE VIEW login_history_view AS
+SELECT *,
+       0 AS streak
+FROM login_history;
+
+--view to calculate hot streaks
+create VIEW login_history_view AS
+WITH login_history_cte AS (
+  SELECT DISTINCT
+    user_id,
+    LEFT(login_datetime::text, 10) AS login_date,
+    COALESCE(
+      EXTRACT(DAY FROM lag(login_datetime) OVER (PARTITION BY user_id ORDER BY login_datetime DESC)) - EXTRACT(DAY FROM login_datetime),
+      0
+    ) AS day_difference,
+    CASE WHEN COALESCE(EXTRACT(DAY FROM lag(login_datetime) OVER (PARTITION BY user_id ORDER BY login_datetime DESC)) - EXTRACT(DAY FROM login_datetime), 0) = 0 THEN 1 ELSE COALESCE(EXTRACT(DAY FROM lag(login_datetime) OVER (PARTITION BY user_id ORDER BY login_datetime DESC)) - EXTRACT(DAY FROM login_datetime), 0) END AS adjusted_day_difference
+  FROM login_history
+)
+SELECT distinct lh.user_id,
+       lh.login_date,
+       lh.day_difference,
+       lh.adjusted_day_difference,
+       (
+  SELECT COUNT(DISTINCT login_date)
+  FROM login_history_cte
+  WHERE user_id = lh.user_id
+    AND login_date <= lh.login_date
+    AND adjusted_day_difference = 1
+) AS streak
+
+FROM login_history_cte lh
+ORDER BY lh.login_date DESC;
+
+--Hot streak query from view 
+select * from login_history_view where user_id = 1 limit 1
