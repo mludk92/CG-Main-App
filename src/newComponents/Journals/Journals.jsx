@@ -16,6 +16,7 @@ function Journals() {
 
   useEffect(() => {
     dispatch({ type: "FETCH_JOURNAL" });
+    dispatch({ type: "POST_BADGE" });
   }, [dispatch]);
 
   // Function to format the date
