@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
@@ -12,17 +12,17 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Typography from '@mui/material/Typography';
 
-function ExploreContent({ content }) {
+function ExploreContent({ content, favorites }) {
 
     // Remove the last 4 characters (file extension)
     const trimExtension = (filename) => {
         return filename.slice(0, -4);
     };
 
-    const [isFavorite, setIsFavorite] = useState(false);
+    const [isFavorite, setIsFavorite] =
+        useState(favorites.some(item => item.content_id === content.id));
 
     const addFavorite = () => {
-        setIsFavorite(true);
         axios.post('favorites', { id: content.id })
             .then(response => {
                 alert(`Added ${content.name} to favorites.`);
@@ -30,17 +30,18 @@ function ExploreContent({ content }) {
             .catch(error => {
                 alert('Error adding content to favorites.', error);
             });
+        setIsFavorite(true);
     }
 
     const removeFavorite = () => {
-        setIsFavorite(false);
         axios.delete('/favorites', { data: { id: content.id } })
             .then(response => {
                 alert(`Removed ${content.name} from favorites.`);
             })
             .catch(error => {
                 alert('Error deleteing content from favorites.', error)
-            })
+            });
+        setIsFavorite(false);
     }
 
     return (

@@ -5,19 +5,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ExploreContent from './ExploreContent';
 
-function ExploreList() {
-
-    const [contentList, setContentList] = useState([]);
-
-    useEffect(() => {
-        axios.get('/api/audio')
-            .then(response => {
-                setContentList(response.data);
-            })
-            .catch(error => {
-                console.log('Error retrieving audio files:', error);
-            });
-    }, []);
+function ExploreList({ contentList, favorites }) {
 
     return (
         <Box sx={{ mt: 1 }}>
@@ -27,6 +15,7 @@ function ExploreList() {
                         <Grid item key={i} xs={5}>
                             <ExploreContent
                                 content={content}
+                                favorites={favorites}
                             />
                         </Grid>
                     ))
