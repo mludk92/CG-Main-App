@@ -11,8 +11,8 @@ function ExploreFilter() {
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
             <FormControl>
                 <RadioGroup row>
-                    <FormControlLabel value="mental" control={<Radio />} label="Mental" />
-                    <FormControlLabel value='financial' control={<Radio />} label="Financial" />
+                    <FormControlLabel value="health" control={<Radio />} label="Health" />
+                    <FormControlLabel value='wealth' control={<Radio />} label="Wealth" />
                     <FormControlLabel value='favorites' control={<Radio />} label="Favorites" />
                 </RadioGroup>
             </FormControl>

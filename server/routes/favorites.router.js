@@ -2,6 +2,29 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool');
 
+router.get('/', (req, res) => {
+    console.log('In /favorites GET route');
+
+    if (req.isAuthenticated()) {
+        const userId = req.user.id;
+        const queryText = `SELECT * FROM favorites 
+            LEFT JOIN audio ON favorites.content_id = audio.id
+            WHERE favorites.user_id = $1;`;
+
+        pool
+            .query(queryText, [userId])
+            .then(result => {
+                res.send(result.rows);
+            })
+            .catch(error => {
+                console.log('ERROR in GET favorites:', error);
+                res.sendStatus(500);
+            })
+    } else {
+        res.sendStatus(403);
+    }
+});
+
 router.post('/', (req, res) => {
     console.log('In /favorites POST route');
 
