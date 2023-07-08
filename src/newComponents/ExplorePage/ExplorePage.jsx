@@ -12,6 +12,7 @@ function Explore() {
 
     const [contentList, setContentList] = useState([]);
     const [favorites, setFavorites] = useState([]);
+    const [filter, setFilter] = useState('all');
 
     useEffect(() => {
         axios.get('/favorites')
@@ -21,7 +22,7 @@ function Explore() {
             .catch(error => {
                 console.log('Error retrieving favorites:', error);
             })
-    }, []);
+    }, [favorites]);
 
     useEffect(() => {
         axios.get('/api/audio')
@@ -37,10 +38,13 @@ function Explore() {
         <Box>
             <ExploreHeader />
             <Divider variant='middle' sx={{ mt: 2 }} />
-            <ExploreFilter />
+            <ExploreFilter 
+                setFilter={setFilter}
+            />
             <ExploreList 
                 contentList={contentList} 
-                favorites={favorites} 
+                favorites={favorites}
+                filter={filter}
             />
         </Box>
     )
