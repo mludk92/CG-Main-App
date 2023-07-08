@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import './FileUploads.css';
+
 function FileUploads() {
   const [fileName, setFileName] = useState('');
   const [fileType, setFileType] = useState('');
@@ -11,6 +13,7 @@ function FileUploads() {
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
+  const [expandedItems, setExpandedItems] = useState([]);
 
   const onFileChange = (event) => {
     const fileToUpload = event.target.files[0];
@@ -40,9 +43,8 @@ function FileUploads() {
       postUrl = `/api/video?videoName=${encodeURIComponent(fileName)}&videoType=${encodeURIComponent(fileType)}`;
     }
 
-    // Add the 'author' as a separate parameter in the request URL
+    // Add the 'author', 'title', and 'category' as separate parameters in the request URL
     postUrl += `&author=${encodeURIComponent(author)}&title=${encodeURIComponent(title)}&category=${encodeURIComponent(category)}`;
-
 
     // Log the contents of formData
     for (let [key, value] of formData.entries()) {
@@ -84,6 +86,16 @@ function FileUploads() {
     setCategory('');
   };
 
+  const toggleExpand = (itemId) => {
+    setExpandedItems((prevExpandedItems) => {
+      if (prevExpandedItems.includes(itemId)) {
+        return prevExpandedItems.filter((id) => id !== itemId);
+      } else {
+        return [...prevExpandedItems, itemId];
+      }
+    });
+  };
+
   const getFiles = () => {
     axios
       .get('/api/images')
@@ -121,7 +133,7 @@ function FileUploads() {
   }, []);
 
   return (
-    <div>
+    <div className="file-uploads">
       <form onSubmit={sendFileToServer}>
         <input type="file" accept="image/*,audio/*,video/*" onChange={onFileChange} />
         <br />
@@ -152,42 +164,67 @@ function FileUploads() {
         <br />
         <button type="submit">Submit</button>
       </form>
-
-      <h2>Images</h2>
-      {imageList.map((image) => (
-        <div key={image.id}>
-          <div>{image.name}</div>
-          <div>{image.type}</div>
-          <img style={{ maxHeight: '200px' }} src={`/api/images/${image.name}`} alt={image.name} />
-          <button onClick={() => deleteFile(image.id, 'images')}>Delete</button>
-        </div>
-      ))}
-
-      <h2>Audio</h2>
-      {audioList.map((audio) => (
-        <div key={audio.id}>
-          <div>{audio.name}</div>
-          <div>{audio.type}</div>
-          <audio controls>
-            <source src={`/api/audio/${encodeURIComponent(audio.name)}`} type={audio.type} />
-          </audio>
-          <button onClick={() => deleteFile(audio.id, 'audio')}>Delete</button>
-        </div>
-      ))}
-
-      <h2>Videos</h2>
-      {videoList.map((video) => (
-        <div key={video.id}>
-          <div>{video.name}</div>
-          <div>{video.type}</div>
-          <video controls>
-            <source src={`/api/video/${encodeURIComponent(video.name)}`} type={video.type} />
-          </video>
-          <button onClick={() => deleteFile(video.id, 'video')}>Delete</button>
-        </div>
-      ))}
+  
+      <div className="file-section">
+        <h2 className={`file-section-header ${expandedItems.includes('images') ? 'expanded' : 'minimized'}`} onClick={() => toggleExpand('images')}>
+          Images {expandedItems.includes('images') ? <span>-</span> : <span>+</span>}
+        </h2>
+        {expandedItems.includes('images') && (
+          <div className="file-list">
+            {imageList.map((image) => (
+              <div key={image.id} className="file-item">
+                <div>{image.name}</div>
+                <div>{image.type}</div>
+                <img className="file-preview" src={`/api/images/${image.name}`} alt={image.name} />
+                <button onClick={() => deleteFile(image.id, 'images')}>Delete</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+  
+      <div className="file-section">
+        <h2 className={`file-section-header ${expandedItems.includes('audio') ? 'expanded' : 'minimized'}`} onClick={() => toggleExpand('audio')}>
+          Audio {expandedItems.includes('audio') ? <span>-</span> : <span>+</span>}
+        </h2>
+        {expandedItems.includes('audio') && (
+          <div className="file-list">
+            {audioList.map((audio) => (
+              <div key={audio.id} className="file-item">
+                <div>{audio.name}</div>
+                <div>{audio.type}</div>
+                <audio className="file-preview" controls>
+                  <source src={`/api/audio/${encodeURIComponent(audio.name)}`} type={audio.type} />
+                </audio>
+                <button onClick={() => deleteFile(audio.id, 'audio')}>Delete</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+  
+      <div className="file-section">
+        <h2 className={`file-section-header ${expandedItems.includes('videos') ? 'expanded' : 'minimized'}`} onClick={() => toggleExpand('videos')}>
+          Videos {expandedItems.includes('videos') ? <span>-</span> : <span>+</span>}
+        </h2>
+        {expandedItems.includes('videos') && (
+          <div className="file-list">
+            {videoList.map((video) => (
+              <div key={video.id} className="file-item">
+                <div>{video.name}</div>
+                <div>{video.type}</div>
+                <video className="file-preview" controls>
+                  <source src={`/api/video/${encodeURIComponent(video.name)}`} type={video.type} />
+                </video>
+                <button onClick={() => deleteFile(video.id, 'video')}>Delete</button>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
-}
+  
+}  
 
-export default FileUploads;
+  export default FileUploads;
