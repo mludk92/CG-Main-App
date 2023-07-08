@@ -1,5 +1,9 @@
-
-  .event-icon {
+.user-container {
+  padding: 20px;
+  padding-bottom: 80px;
+}
+ 
+ .event-icon {
     color: #3D71B8; /* Primary color (outline color) */
     background-color: #83C55F; /* Secondary color (inside color) */
     padding: 2px; 
