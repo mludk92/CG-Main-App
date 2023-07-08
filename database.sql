@@ -19,6 +19,13 @@ CREATE TABLE "user" (
  pronoun varchar(50)
 );
 
+-- Create favorites table
+CREATE TABLE "favorites" (
+	"id" SERIAL PRIMARY KEY,
+	"user_id" INT REFERENCES "user",
+	"content_id" INT REFERENCES "audio"
+);
+
  -- Create the ‘journal’ table
 CREATE TABLE journal (
  id SERIAL PRIMARY KEY,

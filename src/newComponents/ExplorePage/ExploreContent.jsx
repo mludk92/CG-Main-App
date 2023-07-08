@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -11,14 +12,32 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Typography from '@mui/material/Typography';
 
-function ExploreContent({ content }) {
+function ExploreContent({ content, isFavorite }) {
 
     // Remove the last 4 characters (file extension)
     const trimExtension = (filename) => {
         return filename.slice(0, -4);
     };
 
-    const [isFavorite, setIsFavorite] = useState(false);
+    const addFavorite = () => {
+        axios.post('favorites', { id: content.id })
+            .then(response => {
+                alert(`Added ${content.name} to favorites.`);
+            })
+            .catch(error => {
+                alert('Error adding content to favorites.', error);
+            });
+    }
+
+    const removeFavorite = () => {
+        axios.delete('/favorites', { data: { id: content.id } })
+            .then(response => {
+                alert(`Removed ${content.name} from favorites.`);
+            })
+            .catch(error => {
+                alert('Error deleteing content from favorites.', error)
+            });
+    }
 
     return (
         <Card
@@ -60,14 +79,14 @@ function ExploreContent({ content }) {
                 >
                     {isFavorite ? (
                         <FavoriteIcon
-                            onClick={() => setIsFavorite(false)}
+                            onClick={() => removeFavorite()}
                             sx={{
                                 color: '#3d71b8'
                             }}
                         />
                     ) : (
                         <FavoriteBorderOutlinedIcon
-                            onClick={() => setIsFavorite(true)}
+                            onClick={() => addFavorite()}
                             sx={{
                                 color: '#3d71b8'
                             }}
