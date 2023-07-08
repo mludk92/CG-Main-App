@@ -46,39 +46,36 @@ router.get('/:imageName', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    try {
-      const { imageName, imageType, author } = req.query; // Retrieve the 'imageName', 'imageType', and 'author' values from 'req.query'
-      const imageData = req.files.image.data;
-      const imageKey = `images/${imageName}`; // folder/file
-  
-      console.log('imageName:', imageName);
-      console.log('imageType:', imageType);
-      console.log('author:', author);
-      console.log('imageData:', imageData);
-      console.log('imageKey:', imageKey);
-  
-      const command = new PutObjectCommand({
-        Bucket: process.env.AWS_BUCKET,
-        Key: imageKey,
-        Body: imageData,
-      });
-  
-      const response = await s3Client.send(command);
-      console.log('S3 response:', response); // Used for debugging
-  
-      await pool.query(
-        `INSERT INTO "images" ("name", "type", "author")
-              VALUES ($1, $2, $3);`,
-        [imageName, imageType, author]
-      );
-  
-      res.sendStatus(201);
-    } catch (error) {
-      console.log('Error:', error);
-      res.sendStatus(500);
-    }
-  });
-  
+  try {
+    const { imageName, imageType, author, title, category } = req.query; // Retrieve the 'imageName', 'imageType', 'author', 'title', and 'category' values from 'req.query'
+    const decodedImageType = decodeURIComponent(imageType); // Decode the imageType
+
+    const imageData = req.files.image.data;
+    const imageKey = `images/${imageName}`; // folder/file
+
+    const command = new PutObjectCommand({
+      Bucket: process.env.AWS_BUCKET,
+      Key: imageKey,
+      Body: imageData,
+    });
+
+    const response = await s3Client.send(command);
+    console.log('S3 response:', response); // Used for debugging
+
+    await pool.query(
+      `INSERT INTO "images" ("name", "type", "author", "title", "category")
+        VALUES ($1, $2, $3, $4, $5);`,
+      [imageName, decodedImageType, author, title, category] // Use the decodedImageType in the query parameters
+    );
+
+    res.sendStatus(201);
+  } catch (error) {
+    console.log('Error:', error);
+    res.sendStatus(500);
+  }
+});
+
+
 
 
 router.delete('/:fileId', async (req, res) => {

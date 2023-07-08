@@ -9,6 +9,8 @@ function FileUploads() {
   const [audioList, setAudioList] = useState([]);
   const [videoList, setVideoList] = useState([]);
   const [author, setAuthor] = useState('');
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
 
   const onFileChange = (event) => {
     const fileToUpload = event.target.files[0];
@@ -39,7 +41,8 @@ function FileUploads() {
     }
 
     // Add the 'author' as a separate parameter in the request URL
-    postUrl += `&author=${encodeURIComponent(author)}`;
+    postUrl += `&author=${encodeURIComponent(author)}&title=${encodeURIComponent(title)}&category=${encodeURIComponent(category)}`;
+
 
     // Log the contents of formData
     for (let [key, value] of formData.entries()) {
@@ -77,6 +80,8 @@ function FileUploads() {
     setFileType('');
     setSelectedFile(undefined);
     setAuthor('');
+    setTitle('');
+    setCategory('');
   };
 
   const getFiles = () => {
@@ -121,6 +126,29 @@ function FileUploads() {
         <input type="file" accept="image/*,audio/*,video/*" onChange={onFileChange} />
         <br />
         <input type="text" placeholder="Author" value={author} onChange={(e) => setAuthor(e.target.value)} required />
+        <br />
+        <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+        <br />
+        <div>
+          <label>
+            <input
+              type="radio"
+              value="health"
+              checked={category === 'health'}
+              onChange={(e) => setCategory(e.target.value)}
+            />
+            Health
+          </label>
+          <label>
+            <input
+              type="radio"
+              value="wealth"
+              checked={category === 'wealth'}
+              onChange={(e) => setCategory(e.target.value)}
+            />
+            Wealth
+          </label>
+        </div>
         <br />
         <button type="submit">Submit</button>
       </form>

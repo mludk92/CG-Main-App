@@ -43,7 +43,7 @@ router.get('/:audioName', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { audioName, audioType, author } = req.query;
+    const { audioName, audioType, author, title, category } = req.query;
     const decodedAudioType = decodeURIComponent(audioType); // Decode the audioType
 
     const audioData = req.files.audio.data;
@@ -58,9 +58,9 @@ router.post('/', async (req, res) => {
     const response = await s3Client.send(command);
     console.log(response);
     await pool.query(`
-      INSERT INTO "audio" ("name", "type", "author")
-      VALUES ($1, $2, $3);
-    `, [audioName, decodedAudioType, author]); // Use the decodedAudioType in the query parameters
+      INSERT INTO "audio" ("name", "type", "author", "title", "category")
+      VALUES ($1, $2, $3, $4, $5);
+    `, [audioName, decodedAudioType, author, title, category]); // Add title and category to the query parameters
 
     res.sendStatus(201);
   } catch (error) {
@@ -68,6 +68,7 @@ router.post('/', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
 
 
 router.delete('/:fileId', async (req, res) => {

@@ -71,7 +71,9 @@ CREATE TABLE "images" (
 	"id" SERIAL PRIMARY KEY,
 	"name" VARCHAR(1000) NOT NULL,
 	"type" VARCHAR(50) NOT NULL,
-  author VARCHAR(50) NOT NULL
+  author VARCHAR(50) NOT NULL,
+	title VARCHAR(50),
+	category VARCHAR(50)
 );
 
 -- Create the "audio" table
@@ -79,7 +81,9 @@ CREATE TABLE audio (
   id SERIAL PRIMARY KEY,
   name VARCHAR(100) NOT NULL,
   type VARCHAR(50) NOT NULL,
-  author VARCHAR(50) NOT NULL
+  author VARCHAR(50) NOT NULL,
+	title VARCHAR(50),
+	category VARCHAR(50)
 );
 
 -- Create the "videos" table
@@ -88,6 +92,8 @@ CREATE TABLE videos (
   name VARCHAR(100) NOT NULL,
   type VARCHAR(50) NOT NULL,
   author VARCHAR(50) NOT NULL,
+	title VARCHAR(50),
+	category VARCHAR(50)
 );
 
 --login table to track user logins will be used to count hot streaks. 
