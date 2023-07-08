@@ -1,74 +1,109 @@
-.file-item {
-    position: relative;
+.file-uploads {
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    overflow: hidden;
+    margin-top: 20px;
   }
   
-  .file-header {
+  form {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    cursor: pointer;
-    background-color: #f2f2f2;
-    padding: 8px;
-    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
   }
   
-  .file-preview {
-    max-width: 200px;
-    max-height: 200px;
+  input[type="file"] {
     margin-bottom: 10px;
   }
   
-  .expanded {
-    height: auto;
-    padding-bottom: 10px;
+  input[type="text"] {
+    margin-bottom: 10px;
+    padding: 5px;
   }
   
-  .minimized {
-    height: 48px;
-    overflow: hidden;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
+  button {
+    padding: 5px 10px;
+    background-color: #83C55F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
   }
   
   .file-section {
     margin-bottom: 20px;
+    width: 100%;
+    text-align: center;
   }
   
   .file-section-header {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
+    background-color: #3D71B8;
+    color: white;
+    padding: 10px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
+    transition: all 0.3s;
   }
   
   .file-section-header span {
-    font-size: 24px;
-    margin-right: 5px;
+    margin-left: 5px;
+  }
+  
+  .file-section-header.minimized {
+    border-bottom: 1px solid white;
+  }
+  
+  .file-section-header.expanded {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
   
   .file-list {
-    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
   }
   
-  .file-uploads {
+  .file-item {
+    border: 1px solid #3D71B8;
+    border-radius: 5px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 50px;
+    justify-content: center;
   }
+  
+  .file-preview {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #83C55F;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .custom-file-upload {
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #83C55F;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .custom-file-upload input[type="file"] {
+    display: none;
+  }
+  
   

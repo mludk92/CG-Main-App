@@ -133,97 +133,110 @@ function FileUploads() {
   }, []);
 
   return (
-    <div className="file-uploads">
-      <form onSubmit={sendFileToServer}>
+  <div className="file-uploads">
+    <form onSubmit={sendFileToServer}>
+      <label className="custom-file-upload">
         <input type="file" accept="image/*,audio/*,video/*" onChange={onFileChange} />
-        <br />
-        <input type="text" placeholder="Author" value={author} onChange={(e) => setAuthor(e.target.value)} required />
-        <br />
-        <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
-        <br />
-        <div>
-          <label>
-            <input
-              type="radio"
-              value="health"
-              checked={category === 'health'}
-              onChange={(e) => setCategory(e.target.value)}
-            />
-            Health
-          </label>
-          <label>
-            <input
-              type="radio"
-              value="wealth"
-              checked={category === 'wealth'}
-              onChange={(e) => setCategory(e.target.value)}
-            />
-            Wealth
-          </label>
+        Choose File
+      </label>
+      <br />
+      <input type="text" placeholder="Author" value={author} onChange={(e) => setAuthor(e.target.value)} required />
+      <br />
+      <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+      <br />
+      <div>
+        <label>
+          <input
+            type="radio"
+            value="health"
+            checked={category === 'health'}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+          Health
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="wealth"
+            checked={category === 'wealth'}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+          Wealth
+        </label>
+      </div>
+      <br />
+      <button type="submit">Submit</button>
+    </form>
+
+    <div className="file-section">
+      <h2
+        className={`file-section-header ${expandedItems.includes('images') ? 'expanded' : 'minimized'}`}
+        onClick={() => toggleExpand('images')}
+      >
+        Images {expandedItems.includes('images') ? <span>-</span> : <span>+</span>}
+      </h2>
+      {expandedItems.includes('images') && (
+        <div className="file-list">
+          {imageList.map((image) => (
+            <div key={image.id} className="file-item">
+              <div>{image.name}</div>
+              <div>{image.type}</div>
+              <img className="file-preview" src={`/api/images/${image.name}`} alt={image.name} />
+              <button onClick={() => deleteFile(image.id, 'images')}>Delete</button>
+            </div>
+          ))}
         </div>
-        <br />
-        <button type="submit">Submit</button>
-      </form>
-  
-      <div className="file-section">
-        <h2 className={`file-section-header ${expandedItems.includes('images') ? 'expanded' : 'minimized'}`} onClick={() => toggleExpand('images')}>
-          Images {expandedItems.includes('images') ? <span>-</span> : <span>+</span>}
-        </h2>
-        {expandedItems.includes('images') && (
-          <div className="file-list">
-            {imageList.map((image) => (
-              <div key={image.id} className="file-item">
-                <div>{image.name}</div>
-                <div>{image.type}</div>
-                <img className="file-preview" src={`/api/images/${image.name}`} alt={image.name} />
-                <button onClick={() => deleteFile(image.id, 'images')}>Delete</button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-  
-      <div className="file-section">
-        <h2 className={`file-section-header ${expandedItems.includes('audio') ? 'expanded' : 'minimized'}`} onClick={() => toggleExpand('audio')}>
-          Audio {expandedItems.includes('audio') ? <span>-</span> : <span>+</span>}
-        </h2>
-        {expandedItems.includes('audio') && (
-          <div className="file-list">
-            {audioList.map((audio) => (
-              <div key={audio.id} className="file-item">
-                <div>{audio.name}</div>
-                <div>{audio.type}</div>
-                <audio className="file-preview" controls>
-                  <source src={`/api/audio/${encodeURIComponent(audio.name)}`} type={audio.type} />
-                </audio>
-                <button onClick={() => deleteFile(audio.id, 'audio')}>Delete</button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-  
-      <div className="file-section">
-        <h2 className={`file-section-header ${expandedItems.includes('videos') ? 'expanded' : 'minimized'}`} onClick={() => toggleExpand('videos')}>
-          Videos {expandedItems.includes('videos') ? <span>-</span> : <span>+</span>}
-        </h2>
-        {expandedItems.includes('videos') && (
-          <div className="file-list">
-            {videoList.map((video) => (
-              <div key={video.id} className="file-item">
-                <div>{video.name}</div>
-                <div>{video.type}</div>
-                <video className="file-preview" controls>
-                  <source src={`/api/video/${encodeURIComponent(video.name)}`} type={video.type} />
-                </video>
-                <button onClick={() => deleteFile(video.id, 'video')}>Delete</button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+      )}
     </div>
-  );
+
+    <div className="file-section">
+      <h2
+        className={`file-section-header ${expandedItems.includes('audio') ? 'expanded' : 'minimized'}`}
+        onClick={() => toggleExpand('audio')}
+      >
+        Audio {expandedItems.includes('audio') ? <span>-</span> : <span>+</span>}
+      </h2>
+      {expandedItems.includes('audio') && (
+        <div className="file-list">
+          {audioList.map((audio) => (
+            <div key={audio.id} className="file-item">
+              <div>{audio.name}</div>
+              <div>{audio.type}</div>
+              <audio className="file-preview" controls>
+                <source src={`/api/audio/${encodeURIComponent(audio.name)}`} type={audio.type} />
+              </audio>
+              <button onClick={() => deleteFile(audio.id, 'audio')}>Delete</button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+
+    <div className="file-section">
+      <h2
+        className={`file-section-header ${expandedItems.includes('videos') ? 'expanded' : 'minimized'}`}
+        onClick={() => toggleExpand('videos')}
+      >
+        Videos {expandedItems.includes('videos') ? <span>-</span> : <span>+</span>}
+      </h2>
+      {expandedItems.includes('videos') && (
+        <div className="file-list">
+          {videoList.map((video) => (
+            <div key={video.id} className="file-item">
+              <div>{video.name}</div>
+              <div>{video.type}</div>
+              <video className="file-preview" controls>
+                <source src={`/api/video/${encodeURIComponent(video.name)}`} type={video.type} />
+              </video>
+              <button onClick={() => deleteFile(video.id, 'video')}>Delete</button>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </div>
+);
+
   
 }  
 
