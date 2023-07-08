@@ -5,32 +5,27 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ExploreContent from './ExploreContent';
 
-function ExploreList() {
+function ExploreList({ contentList, favorites, filter }) {
 
-    const [contentList, setContentList] = useState([]);
-
-    useEffect(() => {
-        axios.get('/api/audio')
-            .then(response => {
-                setContentList(response.data);
-            })
-            .catch(error => {
-                console.log('Error retrieving audio files:', error);
-            });
-    }, []);
+    const filteredContent = filter === 'favorites'
+        ? favorites
+        : contentList
 
     return (
         <Box sx={{ mt: 1 }}>
             <Grid container spacing={2} justifyContent={'center'}>
                 {
-                    contentList.map((content, i) => (
-                        <Grid item key={i} xs={5}>
-                            <ExploreContent
-                                content={content}
-                            />
-                        </Grid>
-                    ))
-                }
+                    filteredContent.map((content, i) => {
+                        const isFavorite = favorites.some(item => item.content_id === content.id);
+                        return (
+                            <Grid item key={i} xs={5}>
+                                <ExploreContent
+                                    content={content}
+                                    isFavorite={isFavorite}
+                                />
+                            </Grid>
+                        );
+                    })}
             </Grid>
         </Box>
     );
