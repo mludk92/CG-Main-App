@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, call, select } from 'redux-saga/effects';
+
 
 function* fetchBadges() {
   try {
@@ -10,8 +11,19 @@ function* fetchBadges() {
   }
 }
 
+function* postBadgesInBackground() {
+  try {
+    const userId = yield select(state => state.user.id); // Get the user ID from the Redux store or appropriate location
+    const response = yield call(axios.post, '/api/badges');
+    yield put({ type: 'SET_NEW_BADGE', payload: response.data });
+  } catch (error) {
+    console.log('Error posting badges:', error);
+  }
+}
+
 function* badgesSaga() {
   yield takeLatest('FETCH_BADGES', fetchBadges);
+  yield takeLatest('POST_BADGES_IN_BACKGROUND', postBadgesInBackground);
 }
 
 export default badgesSaga;
