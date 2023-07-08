@@ -15,15 +15,17 @@ function ExploreList({ contentList, favorites, filter }) {
         <Box sx={{ mt: 1 }}>
             <Grid container spacing={2} justifyContent={'center'}>
                 {
-                    filteredContent.map((content, i) => (
-                        <Grid item key={i} xs={5}>
-                            <ExploreContent
-                                content={content}
-                                favorites={favorites}
-                            />
-                        </Grid>
-                    ))
-                }
+                    filteredContent.map((content, i) => {
+                        const isFavorite = favorites.some(item => item.content_id === content.id);
+                        return (
+                            <Grid item key={i} xs={5}>
+                                <ExploreContent
+                                    content={content}
+                                    isFavorite={isFavorite}
+                                />
+                            </Grid>
+                        );
+                    })}
             </Grid>
         </Box>
     );

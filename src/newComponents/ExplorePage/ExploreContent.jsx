@@ -12,15 +12,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Typography from '@mui/material/Typography';
 
-function ExploreContent({ content, favorites }) {
+function ExploreContent({ content, isFavorite }) {
 
     // Remove the last 4 characters (file extension)
     const trimExtension = (filename) => {
         return filename.slice(0, -4);
     };
-
-    const [isFavorite, setIsFavorite] =
-        useState(favorites.some(item => item.content_id === content.id));
 
     const addFavorite = () => {
         axios.post('favorites', { id: content.id })
@@ -30,7 +27,6 @@ function ExploreContent({ content, favorites }) {
             .catch(error => {
                 alert('Error adding content to favorites.', error);
             });
-        setIsFavorite(true);
     }
 
     const removeFavorite = () => {
@@ -41,7 +37,6 @@ function ExploreContent({ content, favorites }) {
             .catch(error => {
                 alert('Error deleteing content from favorites.', error)
             });
-        setIsFavorite(false);
     }
 
     return (
