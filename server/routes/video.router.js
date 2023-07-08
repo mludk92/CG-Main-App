@@ -43,29 +43,33 @@ router.get('/:videoName', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { videoName, videoType } = req.query;
-        const videoData = req.files.video.data;
-        const videoKey = `videos/${videoName}`; // folder/file
-        const command = new PutObjectCommand({
-            Bucket: process.env.AWS_BUCKET,
-            Key: videoKey, // folder/file
-            Body: videoData, // Video data to upload
-        });
-
-        const response = await s3Client.send(command);
-        console.log(response); // Used for debugging
-        await pool.query(`
-            INSERT INTO "videos" ("name", "type")
-            VALUES ($1, $2);
-        `, [videoName, videoType]);
-
-        // Send OK back to client
-        res.sendStatus(201);
+      const videoName = decodeURIComponent(req.query.videoName);
+      const videoType = decodeURIComponent(req.query.videoType);
+      const author = decodeURIComponent(req.query.author);
+      const videoData = req.files.video.data;
+      const videoKey = `videos/${videoName}`;
+  
+      const command = new PutObjectCommand({
+        Bucket: process.env.AWS_BUCKET,
+        Key: videoKey,
+        Body: videoData,
+      });
+  
+      const response = await s3Client.send(command);
+      console.log(response);
+      await pool.query(`
+        INSERT INTO "videos" ("name", "type", "author")
+        VALUES ($1, $2, $3);
+      `, [videoName, videoType, author]);
+  
+      res.sendStatus(201);
     } catch (error) {
-        console.log(error);
-        res.sendStatus(500);
+      console.log(error);
+      res.sendStatus(500);
     }
-});
+  });
+  
+  
 router.delete('/:fileId', async (req, res) => {
     try {
       const { fileId } = req.params;

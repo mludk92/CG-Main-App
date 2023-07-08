@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./Badges.css";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -10,36 +10,40 @@ function Badges() {
 
   const [filter, setFilter] = useState("all"); // Filter state
   const [showTooltip, setShowTooltip] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  const badgesContainerRef = useRef(null);
 
   useEffect(() => {
     dispatch({ type: "FETCH_BADGES" });
     dispatch({ type: "FETCH_LOGIN_DATA" });
   }, [dispatch]);
 
+  // ...
+
   useEffect(() => {
     const handleScroll = () => {
-      if (badgesContainerRef.current) {
-        setIsScrolled(badgesContainerRef.current.scrollTop > 0);
+      const container = document.querySelector(".badgescontainer");
+      const indicator = document.querySelector(".indicator");
+  
+      if (container) {
+        if (container.scrollTop > 0) {
+          indicator.classList.add("transparent");
+        } else {
+          indicator.classList.remove("transparent");
+        }
       }
     };
-
-    const container = badgesContainerRef.current;
+  
+    const container = document.querySelector(".badgescontainer");
     if (container) {
       container.addEventListener("scroll", handleScroll);
-      const scrollPosition = localStorage.getItem("badgesScrollPosition");
-      container.scrollTop = scrollPosition || 0;
     }
-
+  
     return () => {
       if (container) {
         container.removeEventListener("scroll", handleScroll);
-        localStorage.setItem("badgesScrollPosition", container.scrollTop);
       }
     };
   }, []);
+
 
   // Add a check to ensure logindata array has data
   if (!logindata || logindata.length === 0) {
@@ -52,7 +56,7 @@ function Badges() {
     "Every day in every way, I am getting stronger.<br/>Great job! You have logged in for 1 day in a row!",
     "In me, I trust.<br/>2 days now! Keep it up!",
     "Inhale the future, exhale the past.<br/>Amazing job! You have logged in for 3 days in a row!",
-    "I am open to the possibilities of the Universe.<br/> What an achievement! You have logged in for 4 days in a row!",
+    "I am open to the possibilities of the Universe.<br/> What an achievement! You have logged infor 4 days in a row!",
     "I am a magnet for health, wealth, and happiness. <br/> The Progress bar is filled, just like your heart!<br/> You have logged in for 5 days in a row!",
   ];
 
@@ -100,7 +104,7 @@ function Badges() {
           ))}
         </div>
 
-        <div className="badgescontainer" ref={badgesContainerRef}>
+        <div className="badgescontainer">
           {filteredBadges.map((badge) => {
             const isCurrentUserBadge = badge.user_id !== null && badge.user_id === 1;
             const badgeImageSrc = isCurrentUserBadge
@@ -123,12 +127,11 @@ function Badges() {
           })}
           {/* Indicator */}
           {filteredBadges.length > 4 && (
-            <div className={`indicator ${isScrolled ? "transparent" : ""}`}>
-              Scroll for more badges
-            </div>
+            <div className="indicator">Scroll for more badges</div>
           )}
         </div>
 
+        {/* Progress Bar */}
         <div className="progress-container">
           <CircularProgress
             variant="determinate"

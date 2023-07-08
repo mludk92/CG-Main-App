@@ -43,30 +43,33 @@ router.get('/:audioName', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { audioName, audioType } = req.query;
-    const audioData = req.files.audio.data; // Access the audio file data
-    const audioKey = `audio/${audioName}`; // Define the key for storing the audio file
+    const { audioName, audioType, author } = req.query;
+    const decodedAudioType = decodeURIComponent(audioType); // Decode the audioType
+
+    const audioData = req.files.audio.data;
+    const audioKey = `audio/${audioName}`;
 
     const command = new PutObjectCommand({
       Bucket: process.env.AWS_BUCKET,
       Key: audioKey,
-      Body: audioData, // Use the audio file data to upload
+      Body: audioData,
     });
 
     const response = await s3Client.send(command);
-    console.log(response); // Used for debugging
+    console.log(response);
     await pool.query(`
-      INSERT INTO "audio" ("name", "type")
-      VALUES ($1, $2);
-    `, [audioName, audioType]);
+      INSERT INTO "audio" ("name", "type", "author")
+      VALUES ($1, $2, $3);
+    `, [audioName, decodedAudioType, author]); // Use the decodedAudioType in the query parameters
 
-    // Send OK back to the client
     res.sendStatus(201);
   } catch (error) {
     console.log(error);
     res.sendStatus(500);
   }
 });
+
+
 router.delete('/:fileId', async (req, res) => {
     try {
       const { fileId } = req.params;

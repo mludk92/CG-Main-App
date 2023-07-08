@@ -47,29 +47,40 @@ router.get('/:imageName', async (req, res) => {
 
 router.post('/', async (req, res) => {
     try {
-        const { imageName, imageType } = req.query;
-        const imageData = req.files.image.data;
-        const imageKey = `images/${imageName}`; // folder/file
-        const command = new PutObjectCommand({
-            Bucket: process.env.AWS_BUCKET,
-            Key: imageKey, // folder/file 
-            Body: imageData, // image data to upload
-        });
-
-        const response = await s3Client.send(command);
-        console.log(response); // Used for debugging
-        await pool.query(`
-            INSERT INTO "images" ("name", "type")
-            VALUES ($1, $2);
-        `, [imageName, imageType]);
-
-        // Send OK back to client
-        res.sendStatus(201);
+      const { imageName, imageType, author } = req.query; // Retrieve the 'imageName', 'imageType', and 'author' values from 'req.query'
+      const imageData = req.files.image.data;
+      const imageKey = `images/${imageName}`; // folder/file
+  
+      console.log('imageName:', imageName);
+      console.log('imageType:', imageType);
+      console.log('author:', author);
+      console.log('imageData:', imageData);
+      console.log('imageKey:', imageKey);
+  
+      const command = new PutObjectCommand({
+        Bucket: process.env.AWS_BUCKET,
+        Key: imageKey,
+        Body: imageData,
+      });
+  
+      const response = await s3Client.send(command);
+      console.log('S3 response:', response); // Used for debugging
+  
+      await pool.query(
+        `INSERT INTO "images" ("name", "type", "author")
+              VALUES ($1, $2, $3);`,
+        [imageName, imageType, author]
+      );
+  
+      res.sendStatus(201);
     } catch (error) {
-        console.log(error)
-        res.sendStatus(500);
+      console.log('Error:', error);
+      res.sendStatus(500);
     }
-});
+  });
+  
+
+
 router.delete('/:fileId', async (req, res) => {
     try {
       const { fileId } = req.params;

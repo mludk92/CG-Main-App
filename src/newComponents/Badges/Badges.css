@@ -86,6 +86,7 @@ body {
   opacity: 0; /* Set opacity to 0 when it loses its original position */
 }
 
+
 .indicator::before {
   margin-right: 5px;
 }
