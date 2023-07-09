@@ -60,26 +60,34 @@ BEGIN
     login_datetime TIMESTAMPTZ NOT NULL
   );
 
-  -- Create the 'images' table
-  CREATE TABLE IF NOT EXISTS "images" (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(1000) NOT NULL,
-    type VARCHAR(50) NOT NULL
-  );
+CREATE TABLE "images" (
+	"id" SERIAL PRIMARY KEY,
+	"name" VARCHAR(1000) NOT NULL,
+	"type" VARCHAR(50) NOT NULL,
+  author VARCHAR(50) NOT NULL,
+	title VARCHAR(50),
+	category VARCHAR(50)
+);
 
-  -- Create the 'audio' table
-  CREATE TABLE IF NOT EXISTS audio (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
-    type VARCHAR(50)
-  );
+-- Create the "audio" table
+CREATE TABLE audio (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  type VARCHAR(50) NOT NULL,
+  author VARCHAR(50) NOT NULL,
+	title VARCHAR(50),
+	category VARCHAR(50)
+);
 
-  -- Create the 'videos' table
-  CREATE TABLE IF NOT EXISTS videos (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100),
-    type VARCHAR(50)
-  );
+-- Create the "videos" table
+CREATE TABLE videos (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  type VARCHAR(50) NOT NULL,
+  author VARCHAR(50) NOT NULL,
+	title VARCHAR(50),
+	category VARCHAR(50)
+);
 
   -- Create the 'videos_audio_view' view
   CREATE OR REPLACE VIEW videos_audio_view AS

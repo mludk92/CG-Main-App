@@ -57,19 +57,19 @@ body {
   grid-gap: 10px;
   justify-items: center;
   width: 95%;
-  height: 40vh; /* Use viewport height unit for adaptive height */
+  height: 39vh; /* Use viewport height unit for adaptive height */
   margin: 0 auto;
   margin-top: 2px;
   overflow: auto; /* Add overflow property to enable scrollbar */
   position: relative; /* Add position property for positioning the indicator */
-  box-shadow: inset 0 0 30px #3D71B8; /* Add inset box shadow */
+  /*box-shadow: inset 0 0 30px #3D71B8; /* Add inset box shadow */
 }
 
 
 
 .indicator {
   position: absolute;
-  bottom: 0;
+  top: 0;
   width: 100%;
   height: 20px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -95,6 +95,7 @@ body {
 
 
 .badges {
+  padding-top: 20px;
   max-width: 150px;
   max-height: 150px;
 }
@@ -174,6 +175,8 @@ body {
 }
 
 .progress-label {
+  position: absolute;
+  bottom: 75px;
   text-align: center;
   font-size: 80%;
   margin: 0;

@@ -3,20 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Badges.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
+
 function Badges() {
   const dispatch = useDispatch();
   const badgesEarned = useSelector((store) => store.badges);
   const logindata = useSelector((store) => store.logindata);
-
+  
   const [filter, setFilter] = useState("all"); // Filter state
   const [showTooltip, setShowTooltip] = useState(false);
-
+console.log(logindata)
   useEffect(() => {
     dispatch({ type: "FETCH_BADGES" });
     dispatch({ type: "FETCH_LOGIN_DATA" });
   }, [dispatch]);
 
-  // ...
+ 
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,11 +54,11 @@ function Badges() {
   const progressLevel = logindata[0].streak * 20; // Set the desired progress level here (0-100)
   const progressLabels = [
     "",
-    "Every day in every way, I am getting stronger.<br/>Great job! You have logged in for 1 day in a row!",
-    "In me, I trust.<br/>2 days now! Keep it up!",
-    "Inhale the future, exhale the past.<br/>Amazing job! You have logged in for 3 days in a row!",
-    "I am open to the possibilities of the Universe.<br/> What an achievement! You have logged infor 4 days in a row!",
-    "I am a magnet for health, wealth, and happiness. <br/> The Progress bar is filled, just like your heart!<br/> You have logged in for 5 days in a row!",
+    `Every day in every way, I am getting stronger.<br/>Great job! You have logged in for ${logindata[0].streak} day in a row!`,
+    `In me, I trust.<br/>${logindata[0].streak} days now! Keep it up!`,
+    `Inhale the future, exhale the past.<br/>Amazing job! You have logged in for ${logindata[0].streak} days in a row!`,
+    `I am open to the possibilities of the Universe.<br/> What an achievement! You have logged in for ${logindata[0].streak} days in a row!`,
+    `I am a magnet for health, wealth, and happiness. <br/> The Progress bar is filled, just like your heart!<br/> You have logged in for ${logindata[0].streak} days in a row!`,
   ];
 
   const handleFilterChange = (event) => {
