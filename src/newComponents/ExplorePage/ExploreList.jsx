@@ -11,11 +11,15 @@ function ExploreList({ contentList, favorites, filter }) {
         ? favorites
         : contentList
 
+    const filteredByCategory = filter === 'health' || filter === 'wealth'
+        ? filteredContent.filter(content => content.category === filter)
+        : filteredContent;
+
     return (
         <Box sx={{ mt: 1 }}>
             <Grid container spacing={2} justifyContent={'center'}>
                 {
-                    filteredContent.map((content, i) => {
+                    filteredByCategory.map((content, i) => {
                         const isFavorite = favorites.some(item => item.content_id === content.id);
                         return (
                             <Grid item key={i} xs={5}>
