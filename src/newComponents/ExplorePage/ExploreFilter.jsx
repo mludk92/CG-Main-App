@@ -11,26 +11,32 @@ function ExploreFilter({ setFilter }) {
         setFilter(event.target.value);
     }
 
-    return(
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+    return (
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <FormControl>
                 <RadioGroup row>
-                    <FormControlLabel 
-                        value="health" 
-                        control={<Radio />} 
-                        label="Health" 
+                    <FormControlLabel
+                        value="all"
+                        control={<Radio />}
+                        label="All"
                         onChange={handleFilterChange}
                     />
-                    <FormControlLabel 
-                        value='wealth' 
-                        control={<Radio />} 
-                        label="Wealth" 
+                    <FormControlLabel
+                        value="health"
+                        control={<Radio />}
+                        label="Health"
                         onChange={handleFilterChange}
                     />
-                    <FormControlLabel 
-                        value='favorites' 
-                        control={<Radio />} 
-                        label="Favorites" 
+                    <FormControlLabel
+                        value='wealth'
+                        control={<Radio />}
+                        label="Wealth"
+                        onChange={handleFilterChange}
+                    />
+                    <FormControlLabel
+                        value='favorites'
+                        control={<Radio />}
+                        label="Favs"
                         onChange={handleFilterChange}
                     />
                 </RadioGroup>
