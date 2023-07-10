@@ -14,6 +14,23 @@ const s3Client = new S3Client({
   region: process.env.AWS_REGION,
 });
 
+// Get a specific item from audio table
+router.get('/details/:id', (req, res) => {
+  const { id } = req.params;
+  const queryText = `SELECT * FROM audio WHERE id= $1`
+
+  pool
+    .query(queryText, [id])
+    .then(result => {
+      console.log(result.rows);
+      res.send(result.rows);
+    })
+    .catch(error => {
+      console.log('Error in GET audio details', error);
+      res.sendStatus(500)
+    })
+})
+
 router.get('/', async (req, res) => {
   try {
     let result = await pool.query(`
@@ -68,8 +85,6 @@ router.post('/', async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-
 
 router.delete('/:fileId', async (req, res) => {
     try {
