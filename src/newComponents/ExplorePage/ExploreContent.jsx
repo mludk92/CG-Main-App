@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
@@ -14,10 +14,11 @@ import Typography from '@mui/material/Typography';
 
 function ExploreContent({ content, isFavorite }) {
 
-    // Remove the last 4 characters (file extension)
-    const trimExtension = (filename) => {
-        return filename.slice(0, -4);
-    };
+    const history = useHistory();
+
+    const toDetails = () => {
+        history.push(`/details/${content.id}`)
+    }
 
     const addFavorite = () => {
         axios.post('favorites', { id: content.id })
@@ -51,21 +52,23 @@ function ExploreContent({ content, isFavorite }) {
         >
             <CardContent>
                 <Typography
+                    onClick={toDetails}
+                    variant='body1'
                     sx={{
                         color: 'white'
                     }}
                 >
-                    {trimExtension(content.name)}
+                    {content.title}
                 </Typography>
                 <Typography
-                    variant='body1'
+                    variant='body2'
                     sx={{
                         mt: 1,
                         color: 'white',
                         maxWidth: '80%'
                     }}
                 >
-                    {content.author}
+                    By {content.author}
                 </Typography>
                 <Box
                     sx={{
