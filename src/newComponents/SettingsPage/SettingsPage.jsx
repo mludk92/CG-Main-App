@@ -21,15 +21,7 @@ function SettingsPage() {
     const dispatch = useDispatch();
     const user = useSelector((store) => store.user);
     const [accountOpen, setAccountOpen] = useState(false);
-    
-    const handleLogout = () => {
-        const confirmLogout = window.confirm("Are you sure you want to log out?");
-        if (confirmLogout) {
-          // Dispatch logout action here
-          dispatch({ type: 'LOGOUT' });
-        }
-      };
-    
+   
     const handleAccountClick = () => {
       setAccountOpen(!accountOpen);
     };
@@ -148,7 +140,7 @@ function SettingsPage() {
         variant="contained"
         sx={{ marginTop:"20px", width: "100%", borderRadius: "20px", background:"#83C55F" }}
         startIcon={<LogoutIcon />}
-        onClick={handleLogout}
+        onClick={() => dispatch({ type: 'LOGOUT' })}
       >
         Log Out
       </Button>
