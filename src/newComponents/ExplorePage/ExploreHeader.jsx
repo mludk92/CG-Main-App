@@ -43,17 +43,13 @@ import { useState, useEffect, useRef } from 'react';
 //     );
 // }
 
-function ExploreHeader() {
-    const [searchText, setSearchText] = useState('');
+function ExploreHeader({ search, setSearch }) {
+
     const [searchFocus, setSearchFocus] = useState(false);
     const searchBoxRef = useRef(null);
 
     const searchChange = (event) => {
-        setSearchText(event.target.value);
-    }
-    const searchContent = () => {
-        console.log('Testing search: ' + searchText);
-        setSearchFocus(false);
+        setSearch(event.target.value);
     }
 
     // Sets search focus to false when a user clicks outside search bar
@@ -104,14 +100,9 @@ function ExploreHeader() {
                         flex: 1,
                         width: searchFocus ? '150%' : '0',
                     }}
-                    value={searchText}
+                    value={search}
                     onChange={searchChange}
                 />
-                {searchFocus && (
-                    <Button variant="contained" onClick={searchContent} sx={{ ml: 1 }}>
-                        <ShortcutOutlinedIcon />
-                    </Button>
-                )}
             </Box>
         </Box>
     );
