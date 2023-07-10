@@ -25,7 +25,7 @@ import Badges from '../../newComponents/Badges/Badges';
 import FileUploads from '../../newComponents/FileUploads/FileUploads';
 import './App.css';
 import ContentDetails from '../../newComponents/ContentDetailsPage/ContentDetailsPage';
-
+import SettingsPage from '../../newComponents/SettingsPage/SettingsPage';
 function App() {
   const dispatch = useDispatch();
 
@@ -86,7 +86,12 @@ function App() {
           >
             <UserPage />
           </ProtectedRoute>
+          
+          <ProtectedRoute
+            exact path="/settings">
 
+              <SettingsPage />
+            </ProtectedRoute>
           <Route
             exact
             path="/login"
@@ -100,6 +105,7 @@ function App() {
               <LoginPage />
             }
           </Route>
+
 
           <Route
             exact
@@ -149,7 +155,7 @@ function App() {
           >
             <FileUploads />
           </ProtectedRoute>
-
+          
           {/* If none of the other routes matched, we will show a 404. */}
           <Route>
             <h1>404</h1>
