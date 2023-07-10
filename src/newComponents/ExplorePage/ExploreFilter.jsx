@@ -3,7 +3,6 @@ import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 
 function ExploreFilter({ setFilter }) {
 
@@ -12,7 +11,14 @@ function ExploreFilter({ setFilter }) {
     }
 
     return (
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <Box 
+            sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                mt: 2,
+            }}
+        >
             <FormControl>
                 <RadioGroup row>
                     <FormControlLabel

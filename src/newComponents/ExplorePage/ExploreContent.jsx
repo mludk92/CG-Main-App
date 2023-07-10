@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
@@ -13,6 +13,12 @@ import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlin
 import Typography from '@mui/material/Typography';
 
 function ExploreContent({ content, isFavorite }) {
+
+    const history = useHistory();
+
+    const toDetails = () => {
+        history.push(`/details/${content.id}`)
+    }
 
     const addFavorite = () => {
         axios.post('favorites', { id: content.id })
@@ -46,6 +52,7 @@ function ExploreContent({ content, isFavorite }) {
         >
             <CardContent>
                 <Typography
+                    onClick={toDetails}
                     variant='body1'
                     sx={{
                         color: 'white'
