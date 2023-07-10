@@ -135,7 +135,13 @@ function SettingsPage() {
         </ListItem> */}
         {/* <Divider/> */}
       </List>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "auto", marginBottom: "20px" }}>
+      <Typography variant="h8">Logged in as</Typography>
+      <Typography variant="h8">{user.email}</Typography>
+    </div>
+     
       <div style={{ display: "flex", justifyContent: "center", marginTop: "auto", marginBottom: "20px" }}>
+       
       <Button
         variant="contained"
         sx={{ marginTop:"20px", width: "100%", borderRadius: "20px", background:"#83C55F" }}
