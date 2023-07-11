@@ -35,7 +35,7 @@ function Explore() {
     }, []);
 
     return (
-        <Box>
+        <Box sx={{ mb: 10 }}>
             <ExploreHeader 
                 search={search}
                 setSearch={setSearch}
