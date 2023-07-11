@@ -14,7 +14,7 @@ function HomePage() {
   }, [dispatch]);
 
   return (
-    <Box>
+    <Box sx={{ mb: 10 }}>
       <HomeHeader />
       <NewSection />
       <RecommendedSection />

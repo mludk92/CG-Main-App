@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Box from '@mui/material/Box';
 
 import './FileUploads.css';
 
@@ -133,7 +134,7 @@ function FileUploads() {
   }, []);
 
   return (
-  <div className="file-uploads">
+  <Box className="file-uploads" sx={{ mb: 10 }}>
     <form onSubmit={sendFileToServer}>
       <label className="custom-file-upload">
         <input type="file" accept="image/*,audio/*,video/*" onChange={onFileChange} />
@@ -234,7 +235,7 @@ function FileUploads() {
         </div>
       )}
     </div>
-  </div>
+  </Box>
 );
 
   

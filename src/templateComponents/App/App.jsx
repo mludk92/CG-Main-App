@@ -8,6 +8,8 @@ import {
 
 import { useDispatch, useSelector } from 'react-redux';
 
+import Box from '@mui/material/Box';
+
 import Nav from '../Nav/Nav';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -37,7 +39,7 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <Switch>
           {/* Visiting localhost:3000 will redirect to localhost:3000/home */}
           <Redirect exact from="/" to="/home" />
@@ -162,7 +164,7 @@ function App() {
           </Route>
         </Switch>
         <Nav />
-      </div>
+      </Box>
     </Router>
   );
 }
