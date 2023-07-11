@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import ExploreHeader from './ExploreHeader';
 import ExploreFilter from './ExploreFilter';
@@ -13,6 +12,7 @@ function Explore() {
     const [contentList, setContentList] = useState([]);
     const [favorites, setFavorites] = useState([]);
     const [filter, setFilter] = useState('all');
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
         axios.get('/favorites')
@@ -36,7 +36,10 @@ function Explore() {
 
     return (
         <Box sx={{ mb: 10 }}>
-            <ExploreHeader />
+            <ExploreHeader 
+                search={search}
+                setSearch={setSearch}
+            />
             <Divider variant='middle' sx={{ mt: 2 }} />
             <ExploreFilter 
                 setFilter={setFilter}
@@ -45,6 +48,7 @@ function Explore() {
                 contentList={contentList} 
                 favorites={favorites}
                 filter={filter}
+                search={search}
             />
         </Box>
     )
