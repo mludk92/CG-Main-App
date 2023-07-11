@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
+import Box from '@mui/material/Box';
 import { Typography, Divider, List, ListItem, ListItemText, ListItemIcon} from "@mui/material";
 import LockIcon from '@mui/icons-material/Lock';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -26,7 +27,7 @@ function SettingsPage() {
       setAccountOpen(!accountOpen);
     };
   return (
-    <div className="container">
+    <Box className="container" sx={{ mb: 10 }}>
       <Paper
         sx={{
           minWidth: "100%",
@@ -151,7 +152,7 @@ function SettingsPage() {
         Log Out
       </Button>
     </div>
-    </div>
+    </Box>
   );
 }
 

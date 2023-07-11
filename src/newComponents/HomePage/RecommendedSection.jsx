@@ -33,7 +33,7 @@ function RecommendedSection() {
         }
     ]
     return(
-        <Box sx={{ mt: 3}}>
+        <Box sx={{ mt: 3 }}>
             <Typography variant='h5' sx={{ ml: 2 }}>Recommended</Typography>
             <Box sx={{ maxHeight: 200, overflow: 'scroll' }}>
                 <Stack direction="row" className='cardList'>

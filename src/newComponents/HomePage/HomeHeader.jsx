@@ -7,7 +7,7 @@ function HomeHeader() {
     return(
         <Box>
             <Paper sx={{ minWidth: '100%', minHeight: '220px', borderBottomLeftRadius: '6%', borderBottomRightRadius: '6%', backgroundColor: '#3d71b8' }}>
-                <Typography variant='h4' sx={{ pt: 5, ml: 3, maxWidth: '80%', color: 'white' }}>This space is reserved for a quote or something</Typography>
+                <Typography variant='h4' sx={{ pt: 4, ml: 3, maxWidth: '80%', color: 'white' }}>This space is reserved for a quote or something</Typography>
             </Paper>
         </Box>
     );
