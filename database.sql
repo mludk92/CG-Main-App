@@ -110,7 +110,7 @@ CREATE TABLE login_history (
   login_datetime TIMESTAMPTZ NOT NULL
 );
 -------------------------------------------------------------
--- Create views 
+-- Create SP and views  
 -- will replace the content table. 
 CREATE VIEW videos_audio_view AS
 SELECT ROW_NUMBER() OVER (order by 1) AS id, subquery.content_id, subquery.name, subquery.type
@@ -123,39 +123,50 @@ FROM (
 ) AS subquery;
 select * from videos_audio_view
 
--- Create a view to display the results
-CREATE VIEW login_history_view AS
-SELECT *,
-       0 AS streak
-FROM login_history;
+-- Create a sp to display the results
+CREATE OR REPLACE PROCEDURE calculate_login_streak(user_id_param INT)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  userId INT;
+  loginDate DATE;
+  previousDate DATE;
+  streak INT;
+BEGIN
+  -- Drop the table if it exists
+  DROP TABLE IF EXISTS login_history_with_streak;
 
---view to calculate hot streaks
-create VIEW login_history_view AS
-WITH login_history_cte AS (
-  SELECT DISTINCT
-    user_id,
-    LEFT(login_datetime::text, 10) AS login_date,
-    COALESCE(
-      EXTRACT(DAY FROM lag(login_datetime) OVER (PARTITION BY user_id ORDER BY login_datetime DESC)) - EXTRACT(DAY FROM login_datetime),
-      0
-    ) AS day_difference,
-    CASE WHEN COALESCE(EXTRACT(DAY FROM lag(login_datetime) OVER (PARTITION BY user_id ORDER BY login_datetime DESC)) - EXTRACT(DAY FROM login_datetime), 0) = 0 THEN 1 ELSE COALESCE(EXTRACT(DAY FROM lag(login_datetime) OVER (PARTITION BY user_id ORDER BY login_datetime DESC)) - EXTRACT(DAY FROM login_datetime), 0) END AS adjusted_day_difference
-  FROM login_history
-)
-SELECT distinct lh.user_id,
-       lh.login_date,
-       lh.day_difference,
-       lh.adjusted_day_difference,
-       (
-  SELECT COUNT(DISTINCT login_date)
-  FROM login_history_cte
-  WHERE user_id = lh.user_id
-    AND login_date <= lh.login_date
-    AND adjusted_day_difference = 1
-) AS streak
+  -- Create the login_history_with_streak table
+  CREATE TABLE login_history_with_streak (
+    user_id INT,
+    login_date DATE,
+    streak INT
+  );
 
-FROM login_history_cte lh
-ORDER BY lh.login_date DESC;
+  previousDate := NULL;
+  streak := 1;
+
+  FOR userId, loginDate IN
+    SELECT DISTINCT user_id, CAST(login_datetime AS DATE)
+    FROM login_history
+    WHERE user_id = user_id_param -- Filter by user ID
+    ORDER BY login_datetime ASC
+  LOOP
+    IF loginDate = previousDate + INTERVAL '1 day' THEN
+      streak := streak + 1;
+    ELSE
+      streak := 1;
+    END IF;
+
+    -- Insert the data into the table with the streak column
+    INSERT INTO login_history_with_streak (user_id, login_date, streak)
+    VALUES (userId, loginDate, streak);
+
+    previousDate := loginDate;
+  END LOOP;
+END $$;
+CALL calculate_login_streak(1);
+SELECT * FROM login_history_with_streak;
 
 ----------------------------------------------------------
 -- Dummy data for testing purposes

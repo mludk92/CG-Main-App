@@ -9,9 +9,11 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
+
 function UserPageJournal () {
   const journalEntries = useSelector((store) => store.journal);
   const dispatch = useDispatch();
+
     // Function to format the date
   const formatDate = (dateString) => {
     const options = { month: "2-digit", day: "2-digit", year: "numeric" };
