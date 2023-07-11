@@ -10,25 +10,20 @@ import FocusTrap from '@mui/base/FocusTrap';
 import Stack from '@mui/material/Stack';
 import { useState } from 'react';
 
-function ExploreHeader() {
-    const [searchText, setSearchText] = useState('');
+function ExploreHeader({ search, setSearch }) {
 
     const searchChange = (event) => {
-        setSearchText(event.target.value);
-    }
-    const searchContent = () => {
-        console.log('Testing search: ' + searchText);
-        // For future: use the variable searchText to make a query to the backend when we have a search option
+        setSearch(event.target.value);
     }
 
     return(
         <Paper elevation={3} sx={{ backgroundColor: '#3d71b8', minWidth: '100%', minHeight: '10%', position: 'sticky', top: 0, zIndex: 9 }}>
             <Box sx={{ mx: 2, py: 2, display: 'flex' }}>
                 <Typography variant='h4' sx={{ color: 'white' }}>Explore</Typography>
-                <Paper component="form" id="searchBox" onSubmit={searchContent} sx={{ mt: 0.5, ml: 'auto', p: '2px 4px', display: 'flex', alignItems: 'center', width: 200 }}>
+                <Paper component="form" id="searchBox" sx={{ mt: 0.5, ml: 'auto', p: '2px 4px', display: 'flex', alignItems: 'center', width: 200 }}>
                     <Stack direction={'row'}>
                         <SearchIcon />
-                        <InputBase placeholder='Search' sx={{ ml: 1, flex: 1, maxHeight: 32, pt: 1 }} onChange={searchChange} value={searchText} />
+                        <InputBase placeholder='Search' sx={{ ml: 1, flex: 1, maxHeight: 32, pt: 1 }} onChange={searchChange} value={search} />
                     </Stack>
                 </Paper>
             </Box>
