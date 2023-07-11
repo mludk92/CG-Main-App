@@ -7,104 +7,32 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import ShortcutOutlinedIcon from '@mui/icons-material/ShortcutOutlined';
 import FocusTrap from '@mui/base/FocusTrap';
-import { useState, useEffect, useRef } from 'react';
+import Stack from '@mui/material/Stack';
+import { useState } from 'react';
 
-// function ExploreHeader() {
-//     const [searchText, setSearchText] = useState('');
-//     const [searchFocus, setSearchFocus] = useState(false);
-
-//     const searchChange = (event) => {
-//         setSearchText(event.target.value);
-//     }
-//     const searchContent = () => {
-//         console.log('Testing search: ' + searchText);
-//         setSearchFocus(false);
-//     }
-
-//     return(
-//         <Box sx={{ m: 2, display: 'flex' }}>
-//             <Typography variant='h4'>Explore</Typography>
-//             <FocusTrap open={searchFocus} disableRestoreFocus disableAutoFocus>
-//                 { searchFocus ? 
-//                     <Paper component="form" id="searchBox"
-//                     sx={{ display: 'flex', alignItems: 'center', width: '93%', height: '5%', mx: 'auto', position: 'absolute' }}>
-//                         <SearchIcon sx={{ ml: 1 }} />
-//                         <InputBase placeholder='Search' sx={{ ml: 1, flex: 1 }} value={searchText} onSubmit={searchContent} onChange={searchChange} />
-//                         <Button variant='contained' onClick={searchContent} sx={{ mr: 1 }}>
-//                             <ShortcutOutlinedIcon />
-//                         </Button>
-//                     </Paper> : 
-//                     <Paper component="form" id="searchBox" onFocus={() => setSearchFocus(true)} sx={{ ml: 'auto', p: '2px 4px', display: 'flex', alignItems: 'center', width: 200 }}>
-//                         <SearchIcon />
-//                         <InputBase placeholder='Search' sx={{ ml: 1, flex: 1 }} value={searchText} />
-//                     </Paper>}
-//             </FocusTrap>
-//         </Box>
-//     );
-// }
-
-function ExploreHeader({ search, setSearch }) {
-
-    const [searchFocus, setSearchFocus] = useState(false);
-    const searchBoxRef = useRef(null);
+function ExploreHeader() {
+    const [searchText, setSearchText] = useState('');
 
     const searchChange = (event) => {
-        setSearch(event.target.value);
+        setSearchText(event.target.value);
+    }
+    const searchContent = () => {
+        console.log('Testing search: ' + searchText);
+        // For future: use the variable searchText to make a query to the backend when we have a search option
     }
 
-    // Sets search focus to false when a user clicks outside search bar
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (searchBoxRef.current && !searchBoxRef.current.contains(event.target)) {
-                setSearchFocus(false);
-            }
-        };
-
-        document.addEventListener('click', handleClickOutside);
-
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, []);
-
-    return (
-        <Box
-            sx={{
-                m: 2,
-                display: 'flex',
-                flexDirection: 'column',
-                textAlign: 'center',
-                alignItems: 'center',
-            }}
-        >
-            <Typography variant="h4">Explore</Typography>
-            <Box
-                component={Paper}
-                id="searchBox"
-                onFocus={() => setSearchFocus(true)}
-                ref={searchBoxRef}
-                sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    width: searchFocus ? '100%' : 'fit-content',
-                    p: '2px 4px',
-                    m: 2,
-                }}
-            >
-                <SearchIcon sx={{ ml: 1 }} />
-                <InputBase
-                    placeholder="Search"
-                    sx={{
-                        mt: 1,
-                        mb: -0.5,
-                        flex: 1,
-                        width: searchFocus ? '150%' : '0',
-                    }}
-                    value={search}
-                    onChange={searchChange}
-                />
+    return(
+        <Paper elevation={3} sx={{ backgroundColor: '#3d71b8', minWidth: '100%', minHeight: '10%', position: 'sticky', top: 0, zIndex: 9 }}>
+            <Box sx={{ mx: 2, py: 2, display: 'flex' }}>
+                <Typography variant='h4' sx={{ color: 'white' }}>Explore</Typography>
+                <Paper component="form" id="searchBox" onSubmit={searchContent} sx={{ mt: 0.5, ml: 'auto', p: '2px 4px', display: 'flex', alignItems: 'center', width: 200 }}>
+                    <Stack direction={'row'}>
+                        <SearchIcon />
+                        <InputBase placeholder='Search' sx={{ ml: 1, flex: 1, maxHeight: 32, pt: 1 }} onChange={searchChange} value={searchText} />
+                    </Stack>
+                </Paper>
             </Box>
-        </Box>
+        </Paper>
     );
 }
 
