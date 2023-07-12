@@ -11,6 +11,7 @@ import "./UserPage.css";
 import UserPageJournal from "./UserPageJournal";
 import UserPageHeader from "./UserPageHeader";
 import LogOutButton from "../LogOutButton/LogOutButton";
+
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);

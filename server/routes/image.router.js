@@ -47,7 +47,7 @@ router.get('/:imageName', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { imageName, imageType, author, title, category } = req.query; // Retrieve the 'imageName', 'imageType', 'author', 'title', and 'category' values from 'req.query'
+    const { imageName, imageType, author, title, category, summary } = req.query; // Retrieve the 'imageName', 'imageType', 'author', 'title', and 'category' values from 'req.query'
     const decodedImageType = decodeURIComponent(imageType); // Decode the imageType
 
     const imageData = req.files.image.data;
@@ -63,9 +63,9 @@ router.post('/', async (req, res) => {
     console.log('S3 response:', response); // Used for debugging
 
     await pool.query(
-      `INSERT INTO "images" ("name", "type", "author", "title", "category")
-        VALUES ($1, $2, $3, $4, $5);`,
-      [imageName, decodedImageType, author, title, category] // Use the decodedImageType in the query parameters
+      `INSERT INTO "images" ("name", "type", "author", "title", "category", "summary")
+        VALUES ($1, $2, $3, $4, $5, $6);`,
+      [imageName, decodedImageType, author, title, category, summary] // Use the decodedImageType in the query parameters
     );
 
     res.sendStatus(201);
