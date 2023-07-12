@@ -32,7 +32,7 @@ function ContentDetails() {
                 <Typography variant='h5' className="title" sx={{ mt: 1.5 }}>
                     {content[0].title}
                 </Typography >
-                <Typography style={{ textAlign: 'center', padding: 10 }}>
+                <Typography style={{ textAlign: 'center', padding: 3 }}>
                     By {content[0].author}
                 </Typography>
                 <div className="content">
