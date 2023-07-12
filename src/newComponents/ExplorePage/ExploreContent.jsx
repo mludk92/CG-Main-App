@@ -12,7 +12,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Typography from '@mui/material/Typography';
 
-function ExploreContent({ content, isFavorite }) {
+function ExploreContent({ content, isFavorite, setFavorites }) {
 
     const history = useHistory();
 
@@ -20,10 +20,20 @@ function ExploreContent({ content, isFavorite }) {
         history.push(`/details/${content.id}`)
     }
 
-    const addFavorite = () => {
-        axios.post('favorites', { id: content.id })
+    const refreshFavorites = () => {
+        axios.get('/api/favorites')
             .then(response => {
-                alert(`Added ${content.name} to favorites.`);
+                setFavorites(response.data);
+            })
+            .catch(error => {
+                console.log('Error retrieving favorites:', error);
+            })
+    }
+
+    const addFavorite = () => {
+        axios.post('/api/favorites', { id: content.id })
+            .then(response => {
+                refreshFavorites();
             })
             .catch(error => {
                 alert('Error adding content to favorites.', error);
@@ -31,9 +41,9 @@ function ExploreContent({ content, isFavorite }) {
     }
 
     const removeFavorite = () => {
-        axios.delete('/favorites', { data: { id: content.id } })
+        axios.delete('/api/favorites', { data: { id: content.id } })
             .then(response => {
-                alert(`Removed ${content.name} from favorites.`);
+                refreshFavorites();
             })
             .catch(error => {
                 alert('Error deleteing content from favorites.', error)

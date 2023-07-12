@@ -9,7 +9,7 @@ function* fetchJournal() {
       withCredentials: true,
     };
 
-    const response = yield axios.get('/journal', config);
+    const response = yield axios.get('/api/journal', config);
 
     yield put({ type: 'SET_JOURNAL', payload: response.data });
   } catch (error) {
@@ -24,7 +24,7 @@ function* deleteJournalEntry(action) {
       withCredentials: true,
     };
 
-    yield axios.delete('/journal', { data: action.payload }, config);
+    yield axios.delete('/api/journal', { data: action.payload }, config);
 
     // After successful delete, fetch the updated journal entries
     yield put({ type: 'FETCH_JOURNAL' });
@@ -40,7 +40,7 @@ function* insertJournalEntry(action) {
       withCredentials: true,
     };
 
-    yield axios.post('/journal', action.payload, config);
+    yield axios.post('/api/journal', action.payload, config);
 
     // After successful insert, fetch the updated journal entries
     yield put({ type: 'FETCH_JOURNAL' });
@@ -58,7 +58,7 @@ function* editJournalEntry(action) {
     };
 
     console.log(payload);
-    yield axios.put('/journal', payload, config);
+    yield axios.put('/api/journal', payload, config);
 
     // Dispatch an action to update the Redux store
     yield put({ type: 'FETCH_JOURNAL' });

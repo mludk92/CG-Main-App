@@ -41,8 +41,8 @@ app.use(passport.session());
 /* Routes */
 app.use('/api/user', userRouter);
 app.use('/api/badges', badgesRouter);
-app.use('/favorites', favoritesRouter)
-app.use('/journal', journalRouter);
+app.use('/api/favorites', favoritesRouter)
+app.use('/api/journal', journalRouter);
 app.use('/api/images', imageRouter);
 app.use('/api/audio', audioRouter);
 app.use('/api/video', videoRouter);

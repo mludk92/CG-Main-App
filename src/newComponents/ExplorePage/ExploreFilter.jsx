@@ -16,7 +16,7 @@ function ExploreFilter({ setFilter }) {
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
-                mt: 2,
+                mt: 1,
             }}
         >
             <FormControl>

@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import ExploreContent from './ExploreContent';
 
-function ExploreList({ contentList, favorites, filter, search }) {
+function ExploreList({ contentList, favorites, setFavorites, filter, search }) {
 
     const filteredContent = filter === 'favorites'
         ? favorites
@@ -28,6 +28,7 @@ function ExploreList({ contentList, favorites, filter, search }) {
                                 <ExploreContent
                                     content={content}
                                     isFavorite={isFavorite}
+                                    setFavorites={setFavorites}
                                 />
                             </Grid>
                         );
