@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import "./Badges.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
-
 function Badges() {
   const dispatch = useDispatch();
   const badgesEarned = useSelector((store) => store.badges);
@@ -11,33 +10,41 @@ function Badges() {
   
   const [filter, setFilter] = useState("all"); // Filter state
   const [showTooltip, setShowTooltip] = useState(false);
-console.log(logindata)
+  const [quote, setQuote] = useState(''); // State to hold fetched quote
+
   useEffect(() => {
     dispatch({ type: "FETCH_BADGES" });
     dispatch({ type: "FETCH_LOGIN_DATA" });
+
+    // Fetch motivational quote from API
+    fetch('https://quote-garden.onrender.com/api/v3/quotes?genre=motivational')
+      .then(response => response.json())
+      .then(data => {
+        const randomIndex = Math.floor(Math.random() * data.data.length);
+        setQuote(data.data[randomIndex].quoteText);
+      })
+      .catch(err => console.log(err));
   }, [dispatch]);
 
- 
+  const handleScroll = () => {
+    const container = document.querySelector(".badgescontainer");
+    const indicator = document.querySelector(".indicator");
+
+    if (container) {
+      if (container.scrollTop > 0) {
+        indicator.classList.add("transparent");
+      } else {
+        indicator.classList.remove("transparent");
+      }
+    }
+  };
 
   useEffect(() => {
-    const handleScroll = () => {
-      const container = document.querySelector(".badgescontainer");
-      const indicator = document.querySelector(".indicator");
-  
-      if (container) {
-        if (container.scrollTop > 0) {
-          indicator.classList.add("transparent");
-        } else {
-          indicator.classList.remove("transparent");
-        }
-      }
-    };
-  
     const container = document.querySelector(".badgescontainer");
     if (container) {
       container.addEventListener("scroll", handleScroll);
     }
-  
+
     return () => {
       if (container) {
         container.removeEventListener("scroll", handleScroll);
@@ -45,20 +52,19 @@ console.log(logindata)
     };
   }, []);
 
-
-  // Add a check to ensure logindata array has data
   if (!logindata || logindata.length === 0) {
     return <div>Loading...</div>;
   }
 
-  const progressLevel = logindata[0].streak * 20; // Set the desired progress level here (0-100)
+  const progressLevel = logindata[0].streak * 20;
+
   const progressLabels = [
     "",
-    `Every day in every way, I am getting stronger.<br/>Great job! You have logged in for ${logindata[0].streak} day in a row!`,
-    `In me, I trust.<br/>${logindata[0].streak} days now! Keep it up!`,
-    `Inhale the future, exhale the past.<br/>Amazing job! You have logged in for ${logindata[0].streak} days in a row!`,
-    `I am open to the possibilities of the Universe.<br/> What an achievement! You have logged in for ${logindata[0].streak} days in a row!`,
-    `I am a magnet for health, wealth, and happiness. <br/> The Progress bar is filled, just like your heart!<br/> You have logged in for ${logindata[0].streak} days in a row!`,
+    `${quote}<br/>Great job! You have logged in for ${logindata[0].streak} day in a row!`,
+    `${quote}<br/>${logindata[0].streak} days now! Keep it up!`,
+    `${quote}<br/>Amazing job! You have logged in for ${logindata[0].streak} days in a row!`,
+    `${quote}<br/> What an achievement! You have logged in for ${logindata[0].streak} days in a row!`,
+    `${quote}<br/> The Progress bar is filled, just like your heart!<br/> You have logged in for ${logindata[0].streak} days in a row!`,
   ];
 
   const handleFilterChange = (event) => {
