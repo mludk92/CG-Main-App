@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
@@ -12,17 +12,28 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
 import Typography from '@mui/material/Typography';
 
-function ExploreContent({ content, isFavorite }) {
+function ExploreContent({ content, isFavorite, setFavorites }) {
 
-    // Remove the last 4 characters (file extension)
-    const trimExtension = (filename) => {
-        return filename.slice(0, -4);
-    };
+    const history = useHistory();
+
+    const toDetails = () => {
+        history.push(`/details/${content.id}`)
+    }
+
+    const refreshFavorites = () => {
+        axios.get('/api/favorites')
+            .then(response => {
+                setFavorites(response.data);
+            })
+            .catch(error => {
+                console.log('Error retrieving favorites:', error);
+            })
+    }
 
     const addFavorite = () => {
-        axios.post('favorites', { id: content.id })
+        axios.post('/api/favorites', { id: content.id })
             .then(response => {
-                alert(`Added ${content.name} to favorites.`);
+                refreshFavorites();
             })
             .catch(error => {
                 alert('Error adding content to favorites.', error);
@@ -30,9 +41,9 @@ function ExploreContent({ content, isFavorite }) {
     }
 
     const removeFavorite = () => {
-        axios.delete('/favorites', { data: { id: content.id } })
+        axios.delete('/api/favorites', { data: { id: content.id } })
             .then(response => {
-                alert(`Removed ${content.name} from favorites.`);
+                refreshFavorites();
             })
             .catch(error => {
                 alert('Error deleteing content from favorites.', error)
@@ -51,21 +62,23 @@ function ExploreContent({ content, isFavorite }) {
         >
             <CardContent>
                 <Typography
+                    onClick={toDetails}
+                    variant='body1'
                     sx={{
                         color: 'white'
                     }}
                 >
-                    {trimExtension(content.name)}
+                    {content.title}
                 </Typography>
                 <Typography
-                    variant='body1'
+                    variant='body2'
                     sx={{
                         mt: 1,
                         color: 'white',
                         maxWidth: '80%'
                     }}
                 >
-                    {content.author}
+                    By {content.author}
                 </Typography>
                 <Box
                     sx={{

@@ -100,10 +100,49 @@ CREATE TABLE videos (
     FROM audio
   ) AS subquery;
 
-  -- Create the 'login_history_view' view
-  CREATE OR REPLACE VIEW login_history_view AS
-  SELECT *, 0 AS streak
-  FROM login_history;
+ -- Create a sp to display the results
+CREATE OR REPLACE PROCEDURE calculate_login_streak(user_id_param INT)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+  userId INT;
+  loginDate DATE;
+  previousDate DATE;
+  streak INT;
+BEGIN
+  -- Drop the table if it exists
+  DROP TABLE IF EXISTS login_history_with_streak;
+
+  -- Create the login_history_with_streak table
+  CREATE TABLE login_history_with_streak (
+    user_id INT,
+    login_date DATE,
+    streak INT
+  );
+
+  previousDate := NULL;
+  streak := 1;
+
+  FOR userId, loginDate IN
+    SELECT DISTINCT user_id, CAST(login_datetime AS DATE)
+    FROM login_history
+    WHERE user_id = user_id_param -- Filter by user ID
+    ORDER BY login_datetime ASC
+  LOOP
+    IF loginDate = previousDate + INTERVAL '1 day' THEN
+      streak := streak + 1;
+    ELSE
+      streak := 1;
+    END IF;
+
+    -- Insert the data into the table with the streak column
+    INSERT INTO login_history_with_streak (user_id, login_date, streak)
+    VALUES (userId, loginDate, streak);
+
+    previousDate := loginDate;
+  END LOOP;
+END $$;
+
 
   -- Dummy data for testing purposes
   INSERT INTO journal (user_id, journal, entry_date, mood)

@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
 import Divider from '@mui/material/Divider';
 import ExploreHeader from './ExploreHeader';
 import ExploreFilter from './ExploreFilter';
@@ -13,16 +12,17 @@ function Explore() {
     const [contentList, setContentList] = useState([]);
     const [favorites, setFavorites] = useState([]);
     const [filter, setFilter] = useState('all');
+    const [search, setSearch] = useState('');
 
     useEffect(() => {
-        axios.get('/favorites')
+        axios.get('/api/favorites')
             .then(response => {
                 setFavorites(response.data);
             })
             .catch(error => {
                 console.log('Error retrieving favorites:', error);
             })
-    }, [favorites]);
+    }, []);
 
     useEffect(() => {
         axios.get('/api/audio')
@@ -35,16 +35,20 @@ function Explore() {
     }, []);
 
     return (
-        <Box>
-            <ExploreHeader />
-            <Divider variant='middle' sx={{ mt: 2 }} />
+        <Box sx={{ mb: 10, overflowX: 'hidden' }}>
+            <ExploreHeader 
+                search={search}
+                setSearch={setSearch}
+            />
             <ExploreFilter 
                 setFilter={setFilter}
             />
             <ExploreList 
                 contentList={contentList} 
                 favorites={favorites}
+                setFavorites={setFavorites}
                 filter={filter}
+                search={search}
             />
         </Box>
     )

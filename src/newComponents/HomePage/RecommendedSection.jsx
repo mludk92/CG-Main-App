@@ -9,34 +9,34 @@ function RecommendedSection() {
     const exampleCards = [
         {
             title: 'Title 1',
-            description: 'This is a description'
+            author: 'This is a description'
         },
         {
             title: 'Title 2',
-            description: 'This is a description'
+            author: 'This is a description'
         },
         {
             title: 'Title 3',
-            description: 'This is a description'
+            author: 'This is a description'
         },
         {
             title: 'Title 4',
-            description: 'This is a description'
+            author: 'This is a description'
         },
         {
             title: 'Title 5',
-            description: 'This is a description'
+            author: 'This is a description'
         },
         {
             title: 'Title 6',
-            description: 'This is a description'
+            author: 'This is a description'
         }
     ]
     return(
-        <Box sx={{ mt: 3}}>
+        <Box sx={{ mt: 3 }}>
             <Typography variant='h5' sx={{ ml: 2 }}>Recommended</Typography>
             <Box sx={{ maxHeight: 200, overflow: 'scroll' }}>
-                <Stack direction="row" className='cardList'>
+                <Stack direction="row" className='cardList' sx={{ pr: 16 }}>
                     {
                         exampleCards.map((content, i) => (
                             <ContentCard className='cardContent' 

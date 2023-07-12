@@ -14,10 +14,39 @@ const s3Client = new S3Client({
   region: process.env.AWS_REGION,
 });
 
+// Get a specific item from audio table
+router.get('/details/:id', (req, res) => {
+  const { id } = req.params;
+  const queryText = `SELECT * FROM audio WHERE id= $1`
+
+  pool
+    .query(queryText, [id])
+    .then(result => {
+      console.log(result.rows);
+      res.send(result.rows);
+    })
+    .catch(error => {
+      console.log('Error in GET audio details', error);
+      res.sendStatus(500)
+    })
+})
+
 router.get('/', async (req, res) => {
   try {
     let result = await pool.query(`
       SELECT * FROM "audio";
+    `);
+    res.send(result.rows);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+router.get('/new', async (req, res) => {
+  try {
+    let result = await pool.query(`
+      SELECT * FROM "audio" ORDER BY id DESC LIMIT 5;
     `);
     res.send(result.rows);
   } catch (error) {
@@ -43,7 +72,7 @@ router.get('/:audioName', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { audioName, audioType, author, title, category } = req.query;
+    const { audioName, audioType, author, title, category, summary } = req.query;
     const decodedAudioType = decodeURIComponent(audioType); // Decode the audioType
 
     const audioData = req.files.audio.data;
@@ -58,9 +87,9 @@ router.post('/', async (req, res) => {
     const response = await s3Client.send(command);
     console.log(response);
     await pool.query(`
-      INSERT INTO "audio" ("name", "type", "author", "title", "category")
-      VALUES ($1, $2, $3, $4, $5);
-    `, [audioName, decodedAudioType, author, title, category]); // Add title and category to the query parameters
+      INSERT INTO "audio" ("name", "type", "author", "title", "category", "summary")
+      VALUES ($1, $2, $3, $4, $5, $6);
+    `, [audioName, decodedAudioType, author, title, category, summary]); // Add title and category to the query parameters
 
     res.sendStatus(201);
   } catch (error) {
@@ -68,8 +97,6 @@ router.post('/', async (req, res) => {
     res.sendStatus(500);
   }
 });
-
-
 
 router.delete('/:fileId', async (req, res) => {
     try {

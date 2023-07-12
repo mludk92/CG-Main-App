@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Divider, Typography } from "@mui/material";
 import EmojiEventsTwoToneIcon from "@mui/icons-material/EmojiEventsTwoTone";
 import Card from "@mui/material/Card";
@@ -11,6 +11,7 @@ import "./UserPage.css";
 import UserPageJournal from "./UserPageJournal";
 import UserPageHeader from "./UserPageHeader";
 import LogOutButton from "../LogOutButton/LogOutButton";
+
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
@@ -124,7 +125,17 @@ function UserPage() {
       {/* Journal Table */}
       <UserPageJournal />
 
-      <LogOutButton className="btn" />
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "auto", marginBottom: "20px" }}>
+       
+       <Button
+         variant="contained"
+         sx={{ marginTop:"20px", width: "100%", borderRadius: "20px", background:"#83C55F" }}
+         startIcon={<LogoutIcon />}
+         onClick={() => dispatch({ type: 'LOGOUT' })}
+       >
+         Log Out
+       </Button>
+     </div>
     </div>
   );
 }

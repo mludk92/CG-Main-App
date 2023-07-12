@@ -3,8 +3,6 @@ const router = express.Router();
 const pool = require('../modules/pool');
 
 router.get('/', (req, res) => {
-    console.log('In /favorites GET route');
-
     if (req.isAuthenticated()) {
         const userId = req.user.id;
         const queryText = `SELECT * FROM favorites 

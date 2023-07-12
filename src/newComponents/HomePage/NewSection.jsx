@@ -5,50 +5,26 @@ import Stack from '@mui/material/Stack';
 import ContentCard from './ContentCard';
 import './Home.css';
 
-function NewSection() {
-    const exampleCards = [
-        {
-            title: 'Title 1',
-            description: 'This is a description'
-        },
-        {
-            title: 'Title 2',
-            description: 'This is a description'
-        },
-        {
-            title: 'Title 3',
-            description: 'This is a description'
-        },
-        {
-            title: 'Title 4',
-            description: 'This is a description'
-        },
-        {
-            title: 'Title 5',
-            description: 'This is a description'
-        },
-        {
-            title: 'Title 6',
-            description: 'This is a description'
-        }
-    ]
-
+function NewSection({newContent}) {
     return(
-        <Box sx={{ mt: 3 }}>
-            <Typography variant='h5' sx={{ ml: 2 }}>New</Typography>
-            <Box sx={{ maxHeight: 200, overflow: 'scroll' }}>
-                <Stack direction="row" className='cardList'>
-                    {
-                        exampleCards.map((content, i) => (
-                            <ContentCard className='cardContent'
-                                key={i}
-                                content = {content}
-                            />
-                        ))
-                    }
-                </Stack>
+        newContent === undefined
+            ? <h3>Loading</h3>
+            :
+            <Box sx={{ mt: 3 }}>
+                <Typography variant='h5' sx={{ ml: 2 }}>New</Typography>
+                <Box sx={{ maxHeight: 200, overflow: 'scroll' }}>
+                    <Stack direction="row" className='cardList' sx={{ pr: 16 }}>
+                        {
+                            newContent.map((content, i) => (
+                                <ContentCard className='cardContent'
+                                    key={i}
+                                    content = {content}
+                                />
+                            ))
+                        }
+                    </Stack>
+                </Box>
             </Box>
-        </Box>
     );
 }
 

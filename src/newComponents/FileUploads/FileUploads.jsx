@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Box from '@mui/material/Box';
 
 import './FileUploads.css';
 
@@ -13,6 +14,7 @@ function FileUploads() {
   const [author, setAuthor] = useState('');
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
+  const [summary, setSummary] = useState('');
   const [expandedItems, setExpandedItems] = useState([]);
 
   const onFileChange = (event) => {
@@ -44,7 +46,7 @@ function FileUploads() {
     }
 
     // Add the 'author', 'title', and 'category' as separate parameters in the request URL
-    postUrl += `&author=${encodeURIComponent(author)}&title=${encodeURIComponent(title)}&category=${encodeURIComponent(category)}`;
+    postUrl += `&author=${encodeURIComponent(author)}&title=${encodeURIComponent(title)}&category=${encodeURIComponent(category)}&summary=${encodeURIComponent(summary)}`;
 
     // Log the contents of formData
     for (let [key, value] of formData.entries()) {
@@ -83,6 +85,7 @@ function FileUploads() {
     setSelectedFile(undefined);
     setAuthor('');
     setTitle('');
+    setSummary('');
     setCategory('');
   };
 
@@ -133,7 +136,7 @@ function FileUploads() {
   }, []);
 
   return (
-  <div className="file-uploads">
+  <Box className="file-uploads" sx={{ mb: 10 }}>
     <form onSubmit={sendFileToServer}>
       <label className="custom-file-upload">
         <input type="file" accept="image/*,audio/*,video/*" onChange={onFileChange} />
@@ -143,6 +146,8 @@ function FileUploads() {
       <input type="text" placeholder="Author" value={author} onChange={(e) => setAuthor(e.target.value)} required />
       <br />
       <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} required />
+      <br />
+      <input type="text" placeholder="Summary" value={summary} onChange={(e) => setSummary(e.target.value)} />
       <br />
       <div>
         <label>
@@ -234,7 +239,7 @@ function FileUploads() {
         </div>
       )}
     </div>
-  </div>
+  </Box>
 );
 
   
