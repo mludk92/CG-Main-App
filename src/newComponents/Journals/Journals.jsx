@@ -192,6 +192,7 @@ function Journals() {
                     {formatDate(entry.entry_date)}</span> - <span>Mood: {entry.mood}
                   </span>
                 </Typography>
+          
 
                 <div>
                   {/* Edit journal entry icon */}
