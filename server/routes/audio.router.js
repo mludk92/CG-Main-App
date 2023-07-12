@@ -55,6 +55,20 @@ router.get('/new', async (req, res) => {
   }
 });
 
+router.get('/recommended', async (req, res) => {
+  try {
+    let result = await pool.query(`
+    SELECT DISTINCT content_id, COUNT(content_id) OVER (PARTITION BY content_id) AS 
+    content_count, audio.author, audio.category, audio.title, audio.name, audio.type FROM favorites 
+    JOIN audio ON favorites.content_id = audio.id ORDER BY content_count DESC LIMIT 5;
+    `);
+    res.send(result.rows);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
 router.get('/:audioName', async (req, res) => {
   try {
     const { audioName } = req.params;

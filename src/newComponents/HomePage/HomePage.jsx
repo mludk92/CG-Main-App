@@ -10,6 +10,7 @@ import './Home.css';
 function HomePage() {
   const dispatch = useDispatch();
   const [newContent, setNewContent] = useState();
+  const [recommendedContent, setRecommendedContent] = useState();
   const userId = useSelector(state => state.user.userId); 
   useEffect(() => {
     axios.get('/api/audio/new')
@@ -18,7 +19,14 @@ function HomePage() {
       })
       .catch(error => {
         console.log('Error retrieving audio files:', error);
-      });
+    });
+    axios.get('/api/audio/recommended')
+        .then(response => {
+            setRecommendedContent(response.data);
+        })
+        .catch(error => {
+            console.log('Error retrieving audio files:', error);
+    });
   }, []);
 
   useEffect(() => {
@@ -33,7 +41,9 @@ function HomePage() {
       <NewSection 
         newContent={newContent}
       />
-      <RecommendedSection />
+      <RecommendedSection
+        recommendedContent={recommendedContent}
+      />
     </Box>
   );
 }
