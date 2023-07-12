@@ -46,7 +46,7 @@ router.get('/', async (req, res) => {
 router.get('/new', async (req, res) => {
   try {
     let result = await pool.query(`
-      SELECT * FROM "audio" ORDER BY id DESC;
+      SELECT * FROM "audio" ORDER BY id DESC LIMIT 5;
     `);
     res.send(result.rows);
   } catch (error) {
