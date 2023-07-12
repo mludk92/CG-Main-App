@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Card, CardContent, Typography, IconButton, Box, Button, Modal } from "@mui/material";
+import { Card, CardContent, Typography, IconButton, Box, Button, Modal, Divider } from "@mui/material";
 import TextField from '@mui/material/TextField';
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-
+import Paper from "@mui/material/Paper";
 import './Journals.css'
 
 function Journals() {
@@ -82,13 +82,44 @@ function Journals() {
   }
 
   return (
-    <div className="container" style={{
-      height: '100vh',
-      overflowY: 'auto',
-      textAlign: 'center'
+    <>
+     <Paper
+        sx={{
+          minWidth: "100%",
+          minHeight: 85,
+          position: "absolute",
+          backgroundColor: "#3d71b8",
+          top: -30,
+          right: 0,
+        }}
+      />
+    <div className="journal-container" style={{
+       padding: '20px', marginBottom: '80px'
     }}>
-      <Typography variant="h5">Journal</Typography>
-      <br />
+      
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          marginTop: 40,
+          position: "relative",
+        }}
+      >
+      <Typography variant="h4">Journals</Typography>
+        <img
+          src="Logo/cg-smile-icon.png"
+          alt="ChangeGrower Logo"
+          style={{
+            width: "60px",
+            height: "50px",
+            position: "absolute",
+            right: 0,
+            top: 0,
+          }}
+        />
+      </div>
+      <Divider sx={{ marginTop: "10px", borderTopWidth: "4px", marginBottom: "20px"}} />
+     
 
       <form onSubmit={handleCreateEntry}>
         {/* Text area to type journal entry */}
@@ -130,7 +161,7 @@ function Journals() {
               <MenuItem value={5}>5</MenuItem>
             </Select>
           </div>
-          <button className="submit-button" type="submit">Submit</button>
+          <Button style={{ background: '#83C55F'}} variant="contained" className="submit-button" type="submit">Submit</Button>
         </div>
       </form>
 
@@ -167,7 +198,7 @@ function Journals() {
                   <IconButton
                     aria-label="Edit"
                     onClick={() => handleOpenModal(entry.journal, entry.mood, entry.id)}
-                    style={{ marginTop: '-15px', marginRight: '-5px' }}
+                    style={{ color: '#83C55F', marginTop: '-15px', marginRight: '-5px' }}
                   >
                     <EditIcon />
                   </IconButton>
@@ -253,6 +284,7 @@ function Journals() {
       </Modal>
 
     </div>
+    </>
   );
 }
 
