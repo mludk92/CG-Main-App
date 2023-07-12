@@ -20,7 +20,7 @@ function HomeHeader() {
     }, []);
     
 
-    rreturn(
+    return(
         <Box>
             <Paper sx={{ minWidth: '100%', minHeight: '220px', borderBottomLeftRadius: '6%', borderBottomRightRadius: '6%', backgroundColor: '#3d71b8' }}>
                 <Typography variant='h4' sx={{ pt: 5, ml: 3, maxWidth: '80%', color: 'white' }}>{quote || 'Loading quote...'}</Typography>
