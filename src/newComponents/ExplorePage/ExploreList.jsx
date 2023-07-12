@@ -19,12 +19,12 @@ function ExploreList({ contentList, favorites, filter, search }) {
 
     return (
         <Box sx={{ mt: 1 }}>
-            <Grid container spacing={2} justifyContent={'center'}>
+            <Grid columns={36} container spacing={2} justifyContent={'flex-start'} alignItems={'flex-start'} sx={{ mx: 'auto' }}>
                 {
                     filteredBySearch.map((content, i) => {
                         const isFavorite = favorites.some(item => item.content_id === content.id);
                         return (
-                            <Grid item key={i} xs={5}>
+                            <Grid item key={i} xs={16.5}>
                                 <ExploreContent
                                     content={content}
                                     isFavorite={isFavorite}
