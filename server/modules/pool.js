@@ -28,9 +28,9 @@ else {
     pool = new pg.Pool({
         host: 'localhost',
         port: 5432,
-        database: 'changegrower',   // 	💥 Change this to the name of your database!
-        username: 'MitchLudkey', // 💥 Change this to your user name!
-        password: 'admin' // 💥 Change this to your password!
+        database: 'CG',   // 	💥 Change this to the name of your database!
+         // 💥 Change this to your user name!
+         // 💥 Change this to your password!
     
     });
 }
