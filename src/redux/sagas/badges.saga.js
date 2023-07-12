@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { put, takeLatest, call, select } from 'redux-saga/effects';
-
+import { useSelector } from 'react-redux';
 
 function* fetchBadges() {
   try {

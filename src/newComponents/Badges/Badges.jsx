@@ -7,7 +7,7 @@ function Badges() {
   const dispatch = useDispatch();
   const badgesEarned = useSelector((store) => store.badges);
   const logindata = useSelector((store) => store.logindata);
-  
+  const userId = useSelector(state => state.user.id)
   const [filter, setFilter] = useState("all"); // Filter state
   const [showTooltip, setShowTooltip] = useState(false);
   const [quote, setQuote] = useState(''); // State to hold fetched quote
@@ -81,13 +81,15 @@ function Badges() {
     if (filter === "all") {
       return true;
     } else if (filter === "achieved") {
-      return badge.user_id !== null && badge.user_id === 1;
+      return badge.user_id !== null && badge.user_id === userId;
     } else if (filter === "not-achieved") {
-      return badge.user_id === null || badge.user_id !== 1;
+      return badge.user_id === null ;
     }
     return false;
   });
-
+  console.log("filteredBadges:", filteredBadges);
+  console.log(userId, "userId")
+  console.log(badgesEarned, "badgesEarned")
   return (
     <div className="main-container">
       <div className="container1">
@@ -113,7 +115,7 @@ function Badges() {
 
         <div className="badgescontainer">
           {filteredBadges.map((badge) => {
-            const isCurrentUserBadge = badge.user_id !== null && badge.user_id === 1;
+            const isCurrentUserBadge = badge.user_id !== null && badge.user_id === userId;
             const badgeImageSrc = isCurrentUserBadge
               ? `/badges/${badge.badge_name.replace(/\s/g, "")}.png`
               : `/badges/${badge.badge_name.replace(/\s/g, "")}Gray.png`;

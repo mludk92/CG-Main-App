@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Box from '@mui/material/Box';
 import HomeHeader from './HomeHeader';
 import NewSection from './NewSection';
@@ -10,26 +10,28 @@ import './Home.css';
 function HomePage() {
   const dispatch = useDispatch();
   const [newContent, setNewContent] = useState();
-
+  const userId = useSelector(state => state.user.userId); 
   useEffect(() => {
     axios.get('/api/audio/new')
-        .then(response => {
-            setNewContent(response.data);
-        })
-        .catch(error => {
-            console.log('Error retrieving audio files:', error);
-        });
+      .then(response => {
+        setNewContent(response.data);
+      })
+      .catch(error => {
+        console.log('Error retrieving audio files:', error);
+      });
   }, []);
 
   useEffect(() => {
-    dispatch({ type: "POST_BADGES_IN_BACKGROUND" });
-  }, [dispatch]);
+    if (userId) {
+      dispatch({ type: "FETCH_USER", payload: userId });
+    }
+  }, [dispatch, userId]);
 
   return (
     <Box sx={{ mb: 10 }}>
       <HomeHeader />
       <NewSection 
-        newContent = {newContent}
+        newContent={newContent}
       />
       <RecommendedSection />
     </Box>
