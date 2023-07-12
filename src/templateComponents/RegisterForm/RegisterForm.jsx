@@ -80,6 +80,7 @@ function RegisterForm() {
         <div>
           <TextField
             fullWidth
+            focused label="Birthdate"
             type="date"
             name="birthdate"
             value={birthdate}
