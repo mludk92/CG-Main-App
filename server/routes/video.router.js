@@ -43,7 +43,7 @@ router.get('/:videoName', async (req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { videoName, videoType, author, title, category } = req.query; // Retrieve the 'videoName', 'videoType', 'author', 'title', and 'category' values from 'req.query'
+    const { videoName, videoType, author, title, category, summary } = req.query; // Retrieve the 'videoName', 'videoType', 'author', 'title', and 'category' values from 'req.query'
     const decodedVideoName = decodeURIComponent(videoName); // Decode the videoName
     const decodedVideoType = decodeURIComponent(videoType); // Decode the videoType
 
@@ -59,9 +59,9 @@ router.post('/', async (req, res) => {
     const response = await s3Client.send(command);
     console.log(response);
     await pool.query(
-      `INSERT INTO "videos" ("name", "type", "author", "title", "category")
-            VALUES ($1, $2, $3, $4, $5);`,
-      [decodedVideoName, decodedVideoType, author, title, category]
+      `INSERT INTO "videos" ("name", "type", "author", "title", "category", "summary")
+            VALUES ($1, $2, $3, $4, $5, $6);`,
+      [decodedVideoName, decodedVideoType, author, title, category, summary]
     );
 
     res.sendStatus(201);

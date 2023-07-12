@@ -80,7 +80,8 @@ CREATE TABLE "images" (
 	"type" VARCHAR(50) NOT NULL,
   author VARCHAR(50) NOT NULL,
 	title VARCHAR(50),
-	category VARCHAR(50)
+	category VARCHAR(50),
+  summary VARCHAR(1000)
 );
 
 -- Create the "audio" table
@@ -90,7 +91,8 @@ CREATE TABLE audio (
   type VARCHAR(50) NOT NULL,
   author VARCHAR(50) NOT NULL,
 	title VARCHAR(50),
-	category VARCHAR(50)
+	category VARCHAR(50),
+  summary VARCHAR(1000)
 );
 
 -- Create the "videos" table
@@ -100,7 +102,8 @@ CREATE TABLE videos (
   type VARCHAR(50) NOT NULL,
   author VARCHAR(50) NOT NULL,
 	title VARCHAR(50),
-	category VARCHAR(50)
+	category VARCHAR(50),
+  summary VARCHAR(1000)
 );
 
 --login table to track user logins will be used to count hot streaks. 
