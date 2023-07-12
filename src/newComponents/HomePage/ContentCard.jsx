@@ -11,7 +11,7 @@ function ContentCard({content}) {
         <Card className='cardContent' sx={{ mt: 1, ml: 2, minHeight: 150, minWidth: 250, borderRadius: 5, backgroundColor: '#83c55f' }}>
             <CardContent>
                 <Typography variant='h5' sx={{ color: 'white'}}>{content.title}</Typography>
-                <Typography variant='body1' sx={{ mt: 1, color: 'white', maxWidth: '80%' }}>{content.description}</Typography>
+                <Typography variant='body1' sx={{ mt: 1, color: 'white', maxWidth: '80%' }}>{content.author}</Typography>
             </CardContent>
         </Card>
     );
