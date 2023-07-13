@@ -156,10 +156,10 @@ body {
 }
 
 .progress-label {
-  position: absolute;
-  bottom: 5%;
+  position: relative;
+  bottom: -20%;
   text-align: center;
-  font-size: 80%;
+  font-size: 90%;
   margin: 0;
   padding-top: 10px;
   font-family: 'Roboto', sans-serif;
