@@ -20,7 +20,7 @@ function ExploreFilter({ setFilter }) {
             }}
         >
             <FormControl>
-                <RadioGroup row>
+                <RadioGroup row defaultValue="all">
                     <FormControlLabel
                         value="all"
                         control={<Radio />}
