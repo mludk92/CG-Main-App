@@ -126,7 +126,7 @@ body {
 }
 
 .checkmark {
-  position: absolute;
+  position: relative;
   bottom: 5px;
   right: -10px;
 }
