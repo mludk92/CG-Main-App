@@ -29,8 +29,8 @@ function Badges() {
   const handleScroll = () => {
     const container = document.querySelector(".badgescontainer");
     const indicator = document.querySelector(".indicator");
-
-    if (container) {
+  
+    if (container && indicator) {
       if (container.scrollTop > 0) {
         indicator.classList.add("transparent");
       } else {
@@ -38,6 +38,7 @@ function Badges() {
       }
     }
   };
+  
 
   useEffect(() => {
     const container = document.querySelector(".badgescontainer");
