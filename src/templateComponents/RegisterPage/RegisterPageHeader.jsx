@@ -25,7 +25,7 @@ function RegisterPageHeader() {
         <img
           src="Logo/changegrowerlogo.png"
           alt="ChangeGrower Logo"
-          style={{ width: "200px", height: "150px" }}
+          style={{ width: "150px", height: "150px" }}
         />
       </center>
       <center>

@@ -28,7 +28,7 @@ function UserPageHeader() {
           src="Logo/cg-smile-icon.png"
           alt="ChangeGrower Logo"
           style={{
-            width: "60px",
+            width: "50px",
             height: "50px",
             position: "absolute",
             right: 0,
