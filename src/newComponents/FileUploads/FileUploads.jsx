@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
-
+import  Button from '@mui/material/Button';
 import './FileUploads.css';
 
 function FileUploads() {
@@ -170,7 +170,7 @@ function FileUploads() {
         </label>
       </div>
       <br />
-      <button type="submit">Submit</button>
+      <Button variant='outlined' type="submit">Submit</Button>
     </form>
 
     <div className="file-section">
