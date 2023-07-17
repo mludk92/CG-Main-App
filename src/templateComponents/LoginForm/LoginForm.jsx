@@ -46,12 +46,14 @@ function LoginForm() {
             required
             value={username}
             onChange={(event) => setUsername(event.target.value)}
-            sx={{ mb: 2 }}
+            sx={{ mb: 2, width:'60%',  }}
+            inputProps={{
+              style: { height: '35px' }, 
+            }}
           />
-        </div>
-        <div>
+        
           <TextField
-            label="Password:"
+            label="Password"
             type="password"
             name="password"
             required
