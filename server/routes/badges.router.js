@@ -10,9 +10,13 @@ router.get('/', (req, res) => {
     // badge_id, badge_name, and summary 
     // for each badge associated with a user in the badge_earned table
     const queryText = `select distinct b.id, badge_name, summary, badge_id, user_id from badges b
-    left outer join badge_earned be
-    on be.badge_id = b.id
-    where user_id = $1 or user_id is null`
+    left outer join (select * from badge_earned where user_id = $1)be 
+    on be.badge_id = b.id`
+    // `select distinct b.id, badge_name, summary, badge_id, user_id from badges b
+    // left outer join badge_earned be
+    // on be.badge_id = b.id
+    // where user_id = $1 or user_id is null
+    // `
  
 
     pool.query(queryText, [userId]).then((response) => {

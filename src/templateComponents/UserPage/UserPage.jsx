@@ -31,7 +31,7 @@ function UserPage() {
     dispatch({ type: "FETCH_JOURNAL" });
   }, [dispatch]);
 
-  const latestBadge = userBadges[userBadges.length - 1];
+  const latestBadge = userBadges[0];
   console.log(latestBadge);
   // console.log(latestBadge.badge_id)
 

@@ -1,18 +1,20 @@
-
-
 body {
   margin: 0;
   padding: 0;
 }
+
 .main-container {
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
+  height: 100%;
 }
+
 .container1 {
   text-align: center;
-  width: 100vw;
+  width: 100%;
+  height: 100%;
   justify-content: center;
   margin: 0;
   padding: 0;
@@ -42,7 +44,6 @@ body {
   margin: 0;
   font-family: 'Roboto', sans-serif;
   color: white;
-  
 }
 
 .logo {
@@ -56,13 +57,14 @@ body {
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
   justify-items: center;
-  width: 95%;
-  height: 39vh; /* Use viewport height unit for adaptive height */
+  width: 95vw;
+  height: auto;
   margin: 0 auto;
   margin-top: 2px;
-  overflow: auto; /* Add overflow property to enable scrollbar */
-  position: relative; /* Add position property for positioning the indicator */
-  /*box-shadow: inset 0 0 30px #3D71B8; /* Add inset box shadow */
+  top:125px;
+  bottom: 65px;
+  overflow: auto;
+  position: absolute ;
 }
 
 
@@ -78,30 +80,27 @@ body {
   justify-content: center;
   font-family: 'Roboto', sans-serif;
   align-items: center;
-  opacity: 1; /* Set initial opacity to 1 */
-  transition: opacity 0.3s; /* Add a transition effect for opacity change */
+  opacity: 1;
+  transition: opacity 0.3s;
 }
 
 .indicator.transparent {
-  opacity: 0; /* Set opacity to 0 when it loses its original position */
+  opacity: 0;
 }
-
 
 .indicator::before {
   margin-right: 5px;
 }
 
-
-
-
 .badges {
   padding-top: 20px;
-  max-width: 150px;
-  max-height: 150px;
+  width: 22vh;
+  height: 25vh;
 }
 
 .badge-container {
   position: relative;
+  
 }
 
 .badge-summary {
@@ -113,21 +112,21 @@ body {
   color: white;
   font-size: 14px;
   max-width: 150px;
-  white-space: normal; /* Allow auto-wrapping */
-  text-align: center; /* Center-align the text */
+  white-space: normal;
+  text-align: center;
   opacity: 0;
   visibility: hidden;
   font-family: 'Roboto', sans-serif;
   transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-
 .badge-container:hover .badge-summary {
   opacity: 1;
   visibility: visible;
 }
+
 .checkmark {
-  position: absolute;
+  position: relative;
   bottom: 5px;
   right: -10px;
 }
@@ -136,49 +135,31 @@ body {
   width: 40px;
   height: 40px;
 }
+
 .progress-container {
   position: relative;
-  margin-top:20px ;
+  margin-top: 20px;
   width: 100%;
-  
   display: flex;
-  justify-content: center; /* Center the progress bar horizontally */
-  align-items: center; /* Center the progress bar vertically */
-  background-image: url("/public/badges/progress.png");
-  background-size:contain;
-  background-position: center;
+  justify-content: center;
   align-items: center;
-  background-repeat: no-repeat; /* Remove background image repeat */
+  background-image: url("/public/badges/progress.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .progress-bar {
   position: relative;
-  width: 100%; /* Adjust the width of the progress bar */
-  height: 20px; /* Adjust the height of the progress bar */
- 
-}
-
-.progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.progress-background {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
+  height: 20px;
 }
 
 .progress-label {
-  position: absolute;
-  bottom: 75px;
+  position: relative;
+  bottom: -20%;
   text-align: center;
-  font-size: 80%;
+  font-size: 90%;
   margin: 0;
   padding-top: 10px;
   font-family: 'Roboto', sans-serif;
@@ -194,4 +175,3 @@ body {
     -.10px .10px 0 #83C55F,
     .10px .10px 0 #3D71B8;
 }
-
